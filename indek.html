@@ -2,78 +2,51 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LMS SD Mahkota Hidup</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f1f5f9;
-      color: #1e293b;
-    }
-    header {
-      background: #123b68;
-      color: white;
-      padding: 24px;
-      text-align: center;
-    }
-    main {
-      max-width: 850px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-    }
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px #00000012;
-    }
-    h2 { color: #123b68; }
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #64748b;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LMS SD Mahkota Hidup</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b}
+header{background:#123b68;color:white;padding:25px;text-align:center}
+main{max-width:950px;margin:25px auto;padding:16px}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.card{background:white;border-radius:12px;padding:22px;box-shadow:0 2px 8px #0001}
+.card h2{color:#123b68}
+button{background:#123b68;color:white;border:0;border-radius:7px;padding:10px 15px;cursor:pointer}
+section.detail{display:none;background:white;padding:20px;border-radius:12px;margin-top:20px}
+footer{text-align:center;padding:20px;color:#64748b}
+</style>
 </head>
 <body>
-  <header>
-    <h1>LMS SD Mahkota Hidup</h1>
-    <p>Platform Pembelajaran Digital Sekolah</p>
-  </header>
-
-  <main>
-    <h2>Selamat Datang</h2>
-    <p>Portal pembelajaran siswa dan guru SD Mahkota Hidup.</p>
-
-    <div class="menu">
-      <section class="card">
-        <h3>📚 Materi</h3>
-        <p>Akses bahan pembelajaran.</p>
-      </section>
-      <section class="card">
-        <h3>📝 Tugas</h3>
-        <p>Lihat dan kerjakan tugas sekolah.</p>
-      </section>
-      <section class="card">
-        <h3>❓ Kuis</h3>
-        <p>Latihan dan evaluasi pembelajaran.</p>
-      </section>
-      <section class="card">
-        <h3>📊 Nilai</h3>
-        <p>Lihat hasil belajar siswa.</p>
-      </section>
-    </div>
-  </main>
-
-  <footer>
-    © SD Mahkota Hidup
-  </footer>
+<header>
+<h1>LMS SD Mahkota Hidup</h1>
+<p>Platform Pembelajaran Digital Sekolah</p>
+</header>
+<main>
+<h2>Selamat Datang!</h2>
+<p>Silakan pilih menu pembelajaran di bawah ini.</p>
+<div class="menu">
+<div class="card"><h2>📚 Materi</h2><p>Akses bahan pembelajaran.</p><button onclick="buka('materi')">Buka Materi</button></div>
+<div class="card"><h2>📝 Tugas</h2><p>Lihat informasi tugas sekolah.</p><button onclick="buka('tugas')">Buka Tugas</button></div>
+<div class="card"><h2>❓ Kuis</h2><p>Latihan dan evaluasi belajar.</p><button onclick="buka('kuis')">Buka Kuis</button></div>
+<div class="card"><h2>📊 Nilai</h2><p>Informasi hasil belajar.</p><button onclick="buka('nilai')">Buka Nilai</button></div>
+</div>
+<section id="materi" class="detail"><h2>Materi Pembelajaran</h2><p>Materi pembelajaran akan ditambahkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
+<section id="tugas" class="detail"><h2>Tugas Sekolah</h2><p>Informasi tugas akan ditambahkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
+<section id="kuis" class="detail"><h2>Kuis Pembelajaran</h2><p>Kuis latihan akan tersedia setelah disiapkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
+<section id="nilai" class="detail"><h2>Nilai Siswa</h2><p>Nilai akan ditampilkan setelah sistem penilaian dibuat.</p><button onclick="tutup()">Kembali</button></section>
+</main>
+<footer>© SD Mahkota Hidup</footer>
+<script>
+function buka(id){
+document.querySelectorAll('.detail').forEach(x=>x.style.display='none');
+document.getElementById(id).style.display='block';
+document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+function tutup(){
+document.querySelectorAll('.detail').forEach(x=>x.style.display='none');
+}
+</script>
 </body>
 </html>
