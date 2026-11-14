@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LMS SD Mahkota Hidup</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b}
@@ -16,61 +17,80 @@ main{max-width:950px;margin:25px auto;padding:16px}
 button{background:#123b68;color:white;border:0;border-radius:7px;padding:10px 15px;cursor:pointer}
 section.detail{display:none;background:white;padding:20px;border-radius:12px;margin-top:20px}
 footer{text-align:center;padding:20px;color:#64748b}
+.item-materi{background:#f1f5f9;padding:15px;margin-bottom:12px;border-radius:8px}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>LMS SD Mahkota Hidup</h1>
 <p>Platform Pembelajaran Digital Sekolah</p>
 </header>
+
 <main>
 <h2>Selamat Datang!</h2>
 <p>Silakan pilih menu pembelajaran di bawah ini.</p>
+
 <div class="menu">
-<div class="card"><h2>📚 Materi</h2><p>Akses bahan pembelajaran.</p><button onclick="buka('materi')">Buka Materi</button></div>
-<div class="card"><h2>📝 Tugas</h2><p>Lihat informasi tugas sekolah.</p><button onclick="buka('tugas')">Buka Tugas</button></div>
-<div class="card"><h2>❓ Kuis</h2><p>Latihan dan evaluasi belajar.</p><button onclick="buka('kuis')">Buka Kuis</button></div>
-<div class="card"><h2>📊 Nilai</h2><p>Informasi hasil belajar.</p><button onclick="buka('nilai')">Buka Nilai</button></div>
+<div class="card">
+<h2>📚 Materi</h2>
+<p>Akses bahan pembelajaran.</p>
+<button onclick="buka('materi')">Buka Materi</button>
 </div>
+
+<div class="card">
+<h2>📝 Tugas</h2>
+<p>Lihat informasi tugas sekolah.</p>
+<button onclick="buka('tugas')">Buka Tugas</button>
+</div>
+
+<div class="card">
+<h2>❓ Kuis</h2>
+<p>Latihan dan evaluasi belajar.</p>
+<button onclick="buka('kuis')">Buka Kuis</button>
+</div>
+
+<div class="card">
+<h2>📊 Nilai</h2>
+<p>Informasi hasil belajar.</p>
+<button onclick="buka('nilai')">Buka Nilai</button>
+</div>
+</div>
+
 <section id="materi" class="detail">
-    <h2>Materi Pembelajaran</h2>
-    <p>Daftar materi pembelajaran dari guru.</p>
-
-    <div id="daftarMateri">
-        Memuat materi...
-    </div>
-
-    <button onclick="tutup()">Kembali</button>
+<h2>Materi Pembelajaran</h2>
+<p>Daftar materi pembelajaran dari guru.</p>
+<div id="daftarMateri">Klik Buka Materi untuk memuat data.</div>
+<button onclick="tutup()">Kembali</button>
 </section>
-<section id="tugas" class="detail"><h2>Tugas Sekolah</h2><p>Informasi tugas akan ditambahkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
-<section id="kuis" class="detail"><h2>Kuis Pembelajaran</h2><p>Kuis latihan akan tersedia setelah disiapkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
-<section id="nilai" class="detail"><h2>Nilai Siswa</h2><p>Nilai akan ditampilkan setelah sistem penilaian dibuat.</p><button onclick="tutup()">Kembali</button></section>
+
+<section id="tugas" class="detail">
+<h2>Tugas Sekolah</h2>
+<p>Informasi tugas akan ditambahkan oleh guru.</p>
+<button onclick="tutup()">Kembali</button>
+</section>
+
+<section id="kuis" class="detail">
+<h2>Kuis Pembelajaran</h2>
+<p>Kuis latihan akan tersedia setelah disiapkan oleh guru.</p>
+<button onclick="tutup()">Kembali</button>
+</section>
+
+<section id="nilai" class="detail">
+<h2>Nilai Siswa</h2>
+<p>Nilai akan ditampilkan setelah sistem penilaian dibuat.</p>
+<button onclick="tutup()">Kembali</button>
+</section>
+
 </main>
+
 <footer>© SD Mahkota Hidup</footer>
-<script>
-    
-function buka(id){
-    document.querySelectorAll('.detail').forEach(x=>x.style.display='none');
-
-    document.getElementById(id).style.display='block';
-
-    if(id === 'materi'){
-        muatMateri();
-    }
-
-    document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}}
-function tutup(){
-document.querySelectorAll('.detail').forEach(x=>x.style.display='none');
-}
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-console.log("Tes Supabase:", typeof supabase);
-</script>
-    
-<script>
+// Koneksi Supabase
 const SUPABASE_URL = "https://oygmtzaioiiluhyersmu.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_pP5_OdoCYalo3aJP_gBwWQ_luQO1Kko";
 
@@ -79,51 +99,79 @@ const supabaseClient = supabase.createClient(
     SUPABASE_ANON_KEY
 );
 
-console.log("Koneksi Supabase siap digunakan");
-</script>
+// Membuka menu
+function buka(id){
+    document.querySelectorAll('.detail').forEach(function(x){
+        x.style.display = 'none';
+    });
+
+    const bagian = document.getElementById(id);
+    if(!bagian) return;
+
+    bagian.style.display = 'block';
+
+    if(id === 'materi'){
+        muatMateri();
+    }
+
+    bagian.scrollIntoView({behavior:'smooth'});
+}
+
+// Menutup menu
+function tutup(){
+    document.querySelectorAll('.detail').forEach(function(x){
+        x.style.display = 'none';
+    });
+}
+
+// Mengambil data materi dari Supabase
 async function muatMateri(){
 
     const tempat = document.getElementById('daftarMateri');
-
     tempat.textContent = 'Sedang mengambil data materi...';
 
-    const { data, error } = await supabaseClient
-        .from('materi')
-        .select('*');
+    try{
+        const {data, error} = await supabaseClient
+            .from('materi')
+            .select('*');
 
-    if(error){
-        tempat.textContent = 'Gagal mengambil materi: ' + error.message;
-        console.error(error);
-        return;
-    }
+        if(error){
+            tempat.textContent = 'Gagal mengambil materi: ' + error.message;
+            console.error(error);
+            return;
+        }
 
-    tempat.replaceChildren();
+        tempat.replaceChildren();
 
-    if(!data || data.length === 0){
-        tempat.textContent = 'Belum ada materi yang tersedia.';
-        return;
-    }
+        if(!data || data.length === 0){
+            tempat.textContent = 'Belum ada materi yang tersedia.';
+            return;
+        }
 
-    data.forEach(function(item){
+        data.forEach(function(item){
+            const kartu = document.createElement('div');
+            kartu.className = 'item-materi';
 
-        const kartu = document.createElement('div');
-        kartu.style.background = '#f1f5f9';
-        kartu.style.padding = '15px';
-        kartu.style.marginBottom = '12px';
-        kartu.style.borderRadius = '8px';
+            Object.entries(item).forEach(function([kolom, isi]){
+                const baris = document.createElement('p');
+                baris.textContent = kolom + ': ' +
+                    (isi === null ? '-' :
+                    typeof isi === 'object' ? JSON.stringify(isi) : isi);
 
-        Object.entries(item).forEach(function([kolom, isi]){
+                kartu.appendChild(baris);
+            });
 
-            const baris = document.createElement('p');
-            baris.textContent = kolom + ': ' +
-                (isi === null ? '-' :
-                typeof isi === 'object' ? JSON.stringify(isi) : isi);
-
-            kartu.appendChild(baris);
+            tempat.appendChild(kartu);
         });
 
-        tempat.appendChild(kartu);
-    });
+    }catch(error){
+        tempat.textContent = 'Terjadi kesalahan: ' + error.message;
+        console.error(error);
+    }
 }
+
+console.log('LMS SD Mahkota Hidup siap digunakan.');
+</script>
+
 </body>
 </html>
