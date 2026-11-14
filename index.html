@@ -32,18 +32,34 @@ footer{text-align:center;padding:20px;color:#64748b}
 <div class="card"><h2>❓ Kuis</h2><p>Latihan dan evaluasi belajar.</p><button onclick="buka('kuis')">Buka Kuis</button></div>
 <div class="card"><h2>📊 Nilai</h2><p>Informasi hasil belajar.</p><button onclick="buka('nilai')">Buka Nilai</button></div>
 </div>
-<section id="materi" class="detail"><h2>Materi Pembelajaran</h2><p>Materi pembelajaran akan ditambahkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
+<section id="materi" class="detail">
+    <h2>Materi Pembelajaran</h2>
+    <p>Daftar materi pembelajaran dari guru.</p>
+
+    <div id="daftarMateri">
+        Memuat materi...
+    </div>
+
+    <button onclick="tutup()">Kembali</button>
+</section>
 <section id="tugas" class="detail"><h2>Tugas Sekolah</h2><p>Informasi tugas akan ditambahkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
 <section id="kuis" class="detail"><h2>Kuis Pembelajaran</h2><p>Kuis latihan akan tersedia setelah disiapkan oleh guru.</p><button onclick="tutup()">Kembali</button></section>
 <section id="nilai" class="detail"><h2>Nilai Siswa</h2><p>Nilai akan ditampilkan setelah sistem penilaian dibuat.</p><button onclick="tutup()">Kembali</button></section>
 </main>
 <footer>© SD Mahkota Hidup</footer>
 <script>
+    
 function buka(id){
-document.querySelectorAll('.detail').forEach(x=>x.style.display='none');
-document.getElementById(id).style.display='block';
-document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
+    document.querySelectorAll('.detail').forEach(x=>x.style.display='none');
+
+    document.getElementById(id).style.display='block';
+
+    if(id === 'materi'){
+        muatMateri();
+    }
+
+    document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}}
 function tutup(){
 document.querySelectorAll('.detail').forEach(x=>x.style.display='none');
 }
@@ -65,6 +81,49 @@ const supabaseClient = supabase.createClient(
 
 console.log("Koneksi Supabase siap digunakan");
 </script>
+async function muatMateri(){
 
+    const tempat = document.getElementById('daftarMateri');
+
+    tempat.textContent = 'Sedang mengambil data materi...';
+
+    const { data, error } = await supabaseClient
+        .from('materi')
+        .select('*');
+
+    if(error){
+        tempat.textContent = 'Gagal mengambil materi: ' + error.message;
+        console.error(error);
+        return;
+    }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada materi yang tersedia.';
+        return;
+    }
+
+    data.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.style.background = '#f1f5f9';
+        kartu.style.padding = '15px';
+        kartu.style.marginBottom = '12px';
+        kartu.style.borderRadius = '8px';
+
+        Object.entries(item).forEach(function([kolom, isi]){
+
+            const baris = document.createElement('p');
+            baris.textContent = kolom + ': ' +
+                (isi === null ? '-' :
+                typeof isi === 'object' ? JSON.stringify(isi) : isi);
+
+            kartu.appendChild(baris);
+        });
+
+        tempat.appendChild(kartu);
+    });
+}
 </body>
 </html>
