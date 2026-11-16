@@ -125,11 +125,18 @@ footer{
     <button onclick="tutup()">Kembali</button>
 </section>
 
+
 <section id="tugas" class="detail">
     <h2>Tugas Sekolah</h2>
-    <p>Informasi tugas akan ditambahkan oleh guru.</p>
+    <p>Daftar tugas yang diberikan oleh guru.</p>
+
+    <div id="daftarTugas">
+        Klik Buka Tugas untuk memuat data.
+    </div>
+
     <button onclick="tutup()">Kembali</button>
 </section>
+
 
 <section id="kuis" class="detail">
     <h2>Kuis Pembelajaran</h2>
@@ -175,9 +182,13 @@ function buka(id){
 
     bagian.style.display = 'block';
 
-    if(id === 'materi'){
-        muatMateri();
-    }
+  if(id === 'materi'){
+    muatMateri();
+}
+
+if(id === 'tugas'){
+    muatTugas();
+}
 
     bagian.scrollIntoView({behavior:'smooth'});
 }
@@ -195,6 +206,60 @@ function tutup(){
 
 
 async function muatMateri(){
+    
+async function muatTugas(){
+
+    const tempat = document.getElementById('daftarTugas');
+
+    tempat.textContent = 'Sedang mengambil data tugas...';
+
+    try{
+
+        const {data, error} = await supabaseClient
+            .from('tugas')
+            .select('*')
+            .order('created_at', {ascending:false});
+
+        if(error){
+            tempat.textContent = 'Gagal mengambil tugas: ' + error.message;
+            console.error(error);
+            return;
+        }
+
+        tempat.replaceChildren();
+
+        if(!data || data.length === 0){
+            tempat.textContent = 'Belum ada tugas tersedia.';
+            return;
+        }
+
+        data.forEach(function(item){
+
+            const kartu = document.createElement('div');
+            kartu.className = 'item-materi';
+
+            const judul = document.createElement('h3');
+            judul.textContent = item.judul || 'Tugas tanpa judul';
+
+            const deskripsi = document.createElement('p');
+            deskripsi.textContent = item.deskripsi || 'Belum ada deskripsi tugas.';
+
+            kartu.appendChild(judul);
+            kartu.appendChild(deskripsi);
+
+            tempat.appendChild(kartu);
+
+        });
+
+    }catch(error){
+
+        tempat.textContent = 'Terjadi kesalahan: ' + error.message;
+        console.error(error);
+
+    }
+
+}
+
 
     const tempat = document.getElementById('daftarMateri');
 
