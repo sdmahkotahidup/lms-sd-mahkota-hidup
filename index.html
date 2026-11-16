@@ -319,7 +319,61 @@ async function muatTugas(){
 
 console.log("LMS SD Mahkota Hidup siap digunakan.");
 
+async function muatTugas(){
+
+    const tempat = document.getElementById('daftarTugas');
+
+    tempat.textContent = 'Sedang mengambil data tugas...';
+
+    try{
+
+        const {data, error} = await supabaseClient
+            .from('tugas')
+            .select('*')
+            .order('created_at', {ascending:false});
+
+        if(error){
+            tempat.textContent = 'Gagal mengambil tugas: ' + error.message;
+            console.error(error);
+            return;
+        }
+
+        tempat.replaceChildren();
+
+        if(!data || data.length === 0){
+            tempat.textContent = 'Belum ada tugas tersedia.';
+            return;
+        }
+
+        data.forEach(function(item){
+
+            const kartu = document.createElement('div');
+            kartu.className = 'item-materi';
+
+            const judul = document.createElement('h3');
+            judul.textContent = item.judul || 'Tugas tanpa judul';
+
+            const deskripsi = document.createElement('p');
+            deskripsi.textContent = item.deskripsi || 'Belum ada deskripsi tugas.';
+
+            kartu.appendChild(judul);
+            kartu.appendChild(deskripsi);
+
+            tempat.appendChild(kartu);
+
+        });
+
+    }catch(error){
+
+        tempat.textContent = 'Terjadi kesalahan: ' + error.message;
+        console.error(error);
+
+    }
+
+}
+
 </script>
 
 </body>
 </html>
+
