@@ -192,6 +192,8 @@ function tutup(){
 }
 
 // MEMBACA DATA MATERI DARI SUPABASE
+
+
 async function muatMateri(){
 
     const tempat = document.getElementById('daftarMateri');
@@ -205,10 +207,8 @@ async function muatMateri(){
             .select('*');
 
         if(error){
-
             tempat.textContent =
                 'Gagal mengambil materi: ' + error.message;
-
             console.error(error);
             return;
         }
@@ -216,31 +216,25 @@ async function muatMateri(){
         tempat.replaceChildren();
 
         if(!data || data.length === 0){
-
             tempat.textContent =
                 'Belum ada materi yang tersedia.';
-
             return;
         }
 
         data.forEach(function(item){
 
             const kartu = document.createElement('div');
-
             kartu.className = 'item-materi';
 
-            Object.entries(item).forEach(function([kolom, isi]){
+            const judul = document.createElement('h3');
+            judul.textContent = item.judul || 'Materi tanpa judul';
 
-                const baris = document.createElement('p');
+            const isi = document.createElement('p');
+            isi.className = 'isi-materi';
+            isi.textContent = item.isi || 'Isi materi belum tersedia.';
 
-                baris.textContent = kolom + ': ' +
-                    (isi === null ? '-' :
-                    typeof isi === 'object' ?
-                    JSON.stringify(isi) : isi);
-
-                kartu.appendChild(baris);
-
-            });
+            kartu.appendChild(judul);
+            kartu.appendChild(isi);
 
             tempat.appendChild(kartu);
 
@@ -256,6 +250,7 @@ async function muatMateri(){
     }
 
 }
+
 
 console.log("LMS SD Mahkota Hidup siap digunakan.");
 
