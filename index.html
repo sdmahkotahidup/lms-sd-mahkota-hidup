@@ -88,6 +88,121 @@ footer{
     padding:20px;
     color:#64748b;
 }
+    
+/* ===== DESAIN BARU LMS SD MAHKOTA HIDUP ===== */
+
+.mh-welcome {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 25px;
+    align-items: center;
+    padding: 35px;
+    margin-bottom: 25px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #123b68, #2563a6);
+    color: white;
+    overflow: hidden;
+}
+
+.mh-welcome h1 {
+    font-size: 34px;
+    margin: 10px 0;
+    line-height: 1.25;
+}
+
+.mh-welcome p {
+    color: #e2e8f0;
+    line-height: 1.7;
+}
+
+.mh-tag {
+    display: inline-block;
+    background: #ffffff25;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.mh-illustration {
+    text-align: center;
+    font-size: 100px;
+    padding: 15px;
+}
+
+.mh-login-card {
+    max-width: 480px;
+    margin: 25px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(15, 40, 70, 0.10);
+}
+
+.mh-login-card h2 {
+    color: #123b68;
+    margin-top: 0;
+}
+
+.mh-login-card input {
+    width: 100%;
+    padding: 13px;
+    margin: 8px 0 17px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.mh-login-card button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #123b68;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mh-login-card button:hover {
+    background: #2563a6;
+}
+
+.mh-register-link {
+    background: #eff6ff !important;
+    color: #123b68 !important;
+    margin-top: 10px;
+}
+
+.mh-register-link:hover {
+    background: #dbeafe !important;
+}
+
+.mh-divider {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 22px 0;
+}
+
+@media (max-width: 700px) {
+    .mh-welcome {
+        grid-template-columns: 1fr;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .mh-welcome h1 {
+        font-size: 27px;
+    }
+
+    .mh-illustration {
+        font-size: 75px;
+    }
+
+    .mh-login-card {
+        padding: 22px;
+    }
+}
+
 </style>
 </head>
 
@@ -101,43 +216,149 @@ footer{
 <main>
 
 <!-- HALAMAN LOGIN -->
-<section id="halamanLogin" class="card">
-    <h2>Login Pengguna</h2>
-    <p>Silakan masuk menggunakan akun LMS Anda.</p>
+<section id="halamanLogin">
 
-    <form id="formLogin">
-        <label>Email</label>
-        <input
-            type="email"
-            id="email"
-            placeholder="Masukkan email"
-            required
-        >
+    <div class="mh-welcome">
+        <div>
+            <span class="mh-tag">PORTAL PEMBELAJARAN DIGITAL</span>
 
-        <label>Kata Sandi</label>
-        <input
-            type="password"
-            id="password"
-            placeholder="Masukkan kata sandi"
-            required
-        >
+            <h1>Selamat Datang di<br>SD Mahkota Hidup</h1>
 
-        <button type="submit" id="tombolLogin">
-            Masuk
+            <p>
+                Belajar, Berkarya, dan Meraih Prestasi.
+                Mari tumbuh bersama melalui pembelajaran
+                digital yang menyenangkan.
+            </p>
+        </div>
+
+        <div class="mh-illustration">
+            🏫📚
+        </div>
+    </div>
+
+    <div class="mh-login-card">
+
+        <h2>🔐 Login Pengguna</h2>
+
+        <p>Silakan masuk menggunakan akun LMS Anda.</p>
+
+        <form id="formLogin">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Masukkan email"
+                required
+            >
+
+            <label>Kata Sandi</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Masukkan kata sandi"
+                required
+            >
+
+            <button type="submit" id="tombolLogin">
+                Masuk ke LMS
+            </button>
+
+        </form>
+
+        <p id="pesanLogin"></p>
+
+        <hr class="mh-divider">
+
+        <p>Belum memiliki akun LMS?</p>
+
+        <button
+            type="button"
+            class="mh-register-link"
+            onclick="bukaPendaftaran()">
+            📝 Daftar sebagai Siswa
         </button>
-    </form>
 
-    <p id="pesanLogin"></p>
-    <hr>
+    </div>
 
-<p>Belum memiliki akun LMS?</p>
-
-<button
-    type="button"
-    onclick="bukaPendaftaran()">
-    Daftar sebagai Siswa
-</button>
 </section>
+
+
+<!-- FORM PENDAFTARAN SISWA -->
+<section id="halamanDaftar" class="hidden">
+
+    <div class="mh-login-card">
+
+        <h2>📝 Pendaftaran Siswa</h2>
+
+        <p>
+            Selamat bergabung di LMS SD Mahkota Hidup.
+            Silakan lengkapi data berikut.
+        </p>
+
+        <form id="formDaftar">
+
+            <label>Nama Lengkap</label>
+
+            <input
+                type="text"
+                id="daftarNama"
+                placeholder="Nama lengkap siswa"
+                required
+            >
+
+            <label>NISN</label>
+
+            <input
+                type="text"
+                id="daftarNisn"
+                placeholder="Masukkan 10 angka NISN"
+                inputmode="numeric"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                required
+            >
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="daftarEmail"
+                placeholder="Email aktif"
+                required
+            >
+
+            <label>Kata Sandi</label>
+
+            <input
+                type="password"
+                id="daftarPassword"
+                placeholder="Minimal 8 karakter"
+                minlength="8"
+                required
+            >
+
+            <button type="submit" id="tombolDaftar">
+                Kirim Pendaftaran
+            </button>
+
+        </form>
+
+        <p id="pesanDaftar"></p>
+
+        <button
+            type="button"
+            class="mh-register-link"
+            onclick="kembaliLogin()">
+            ← Kembali ke Login
+        </button>
+
+    </div>
+
+</section>
+
 
 
 <!-- DASHBOARD -->
