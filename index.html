@@ -622,7 +622,73 @@ async function muatKuis(){
 
 }
 
+// MEMBUAT AKUN GURU DAN SISWA
+document.getElementById('formBuatAkun')
+.addEventListener('submit', async function(event){
 
+    event.preventDefault();
+
+    const pesan = document.getElementById('pesanBuatAkun');
+    const tombol = document.getElementById('tombolBuatAkun');
+
+    const nama = document.getElementById('namaAkun').value.trim();
+    const username = document.getElementById('usernameAkun').value.trim();
+    const email = document.getElementById('emailAkun').value.trim();
+    const password = document.getElementById('passwordAkun').value;
+    const role = document.getElementById('roleAkun').value;
+
+    if(!penggunaAktif || penggunaAktif.role !== 'admin'){
+        pesan.textContent = 'Hanya administrator yang boleh membuat akun.';
+        pesan.className = 'error';
+        return;
+    }
+
+    tombol.disabled = true;
+    tombol.textContent = 'Sedang membuat akun...';
+    pesan.textContent = '';
+
+    try{
+
+        const {data, error} =
+            await supabaseClient.functions.invoke(
+                'buat-akun-pengguna',
+                {
+                    body: {
+                        nama,
+                        username,
+                        email,
+                        password,
+                        role
+                    }
+                }
+            );
+
+        if(error){
+            throw error;
+        }
+
+        if(data.error){
+            throw new Error(data.error);
+        }
+
+        pesan.textContent = 'Berhasil! Akun ' + nama + ' sudah dibuat.';
+        pesan.className = 'success';
+
+        document.getElementById('formBuatAkun').reset();
+
+    }catch(error){
+
+        pesan.textContent = 'Gagal membuat akun: ' + error.message;
+        pesan.className = 'error';
+
+    }finally{
+
+        tombol.disabled = false;
+        tombol.textContent = 'Buat Akun';
+
+    }
+
+});
 // LOGOUT
 async function logout(){
 
