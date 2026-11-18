@@ -128,10 +128,76 @@ footer{
     </form>
 
     <p id="pesanLogin"></p>
+    <hr>
+
+<p>Belum memiliki akun LMS?</p>
+
+<button
+    type="button"
+    onclick="bukaPendaftaran()">
+    Daftar sebagai Siswa
+</button>
 </section>
 
 
 <!-- DASHBOARD -->
+    <!-- FORM PENDAFTARAN SISWA -->
+<section id="halamanDaftar" class="card hidden">
+
+    <h2>📝 Pendaftaran Siswa</h2>
+    <p>Silakan isi data diri untuk mendaftar LMS SD Mahkota Hidup.</p>
+
+    <form id="formDaftar">
+
+        <label>Nama Lengkap</label>
+        <input
+            type="text"
+            id="daftarNama"
+            placeholder="Nama lengkap siswa"
+            required
+        >
+
+        <label>NISN</label>
+        <input
+            type="text"
+            id="daftarNisn"
+            placeholder="Masukkan 10 angka NISN"
+            inputmode="numeric"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            required
+        >
+
+        <label>Email</label>
+        <input
+            type="email"
+            id="daftarEmail"
+            placeholder="Email aktif"
+            required
+        >
+
+        <label>Kata Sandi</label>
+        <input
+            type="password"
+            id="daftarPassword"
+            placeholder="Minimal 8 karakter"
+            minlength="8"
+            required
+        >
+
+        <button type="submit" id="tombolDaftar">
+            Kirim Pendaftaran
+        </button>
+
+    </form>
+
+    <p id="pesanDaftar"></p>
+
+    <button type="button" onclick="kembaliLogin()">
+        Kembali ke Login
+    </button>
+
+</section>
 <section id="dashboard" class="hidden">
 
     <div class="card">
@@ -369,7 +435,95 @@ async function tampilkanDashboard(user){
 
 }
 
+// MEMBUKA FORM PENDAFTARAN SISWA
+function bukaPendaftaran(){
 
+    document.getElementById('halamanLogin')
+        .classList.add('hidden');
+
+    document.getElementById('halamanDaftar')
+        .classList.remove('hidden');
+
+}
+
+
+// KEMBALI KE HALAMAN LOGIN
+function kembaliLogin(){
+
+    document.getElementById('halamanDaftar')
+        .classList.add('hidden');
+
+    document.getElementById('halamanLogin')
+        .classList.remove('hidden');
+
+    document.getElementById('formDaftar').reset();
+
+    document.getElementById('pesanDaftar').textContent = '';
+
+}
+    // PROSES PENDAFTARAN SISWA
+document.getElementById('formDaftar')
+.addEventListener('submit', async function(event){
+
+    event.preventDefault();
+
+    const nama = document.getElementById('daftarNama').value.trim();
+    const nisn = document.getElementById('daftarNisn').value.trim();
+    const email = document.getElementById('daftarEmail').value.trim();
+    const password = document.getElementById('daftarPassword').value;
+
+    const pesan = document.getElementById('pesanDaftar');
+    const tombol = document.getElementById('tombolDaftar');
+
+    tombol.disabled = true;
+    tombol.textContent = 'Mengirim pendaftaran...';
+    pesan.textContent = '';
+
+    try {
+
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                'daftar-siswa',
+                {
+                    body: {
+                        nama: nama,
+                        nisn: nisn,
+                        email: email,
+                        password: password
+                    }
+                }
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        pesan.textContent =
+            'Pendaftaran berhasil. Silakan menunggu persetujuan sekolah.';
+
+        pesan.className = 'success';
+
+        document.getElementById('formDaftar').reset();
+
+    } catch(error) {
+
+        pesan.textContent =
+            'Pendaftaran gagal: ' + error.message;
+
+        pesan.className = 'error';
+
+    } finally {
+
+        tombol.disabled = false;
+        tombol.textContent = 'Kirim Pendaftaran';
+
+    }
+
+});
 // MEMBUAT MENU BERDASARKAN ROLE
 function buatMenu(role){
 
