@@ -170,14 +170,62 @@ footer{
         <button onclick="tutup()">Kembali</button>
     </section>
 
-    <section id="kelola" class="detail">
-        <h2>⚙️ Pengelolaan LMS</h2>
-        <p>
-            Area pengelolaan untuk administrator.
-            Fitur pengelolaan akun dan data akan dibuat pada tahap berikutnya.
-        </p>
-        <button onclick="tutup()">Kembali</button>
-    </section>
+  <section id="kelola" class="detail">
+    <h2>⚙️ Pengelolaan LMS</h2>
+    <p>Tambah akun guru dan siswa.</p>
+
+    <form id="formBuatAkun">
+
+        <label>Nama Lengkap</label>
+        <input
+            type="text"
+            id="namaAkun"
+            placeholder="Masukkan nama lengkap"
+            required
+        >
+
+        <label>Username</label>
+        <input
+            type="text"
+            id="usernameAkun"
+            placeholder="Masukkan username"
+            required
+        >
+
+        <label>Email</label>
+        <input
+            type="email"
+            id="emailAkun"
+            placeholder="Masukkan email akun"
+            required
+        >
+
+        <label>Kata Sandi</label>
+        <input
+            type="password"
+            id="passwordAkun"
+            placeholder="Minimal 8 karakter"
+            minlength="8"
+            required
+        >
+
+        <label>Jenis Akun</label>
+        <select id="roleAkun" required>
+            <option value="">Pilih jenis akun</option>
+            <option value="guru">Guru</option>
+            <option value="siswa">Siswa</option>
+        </select>
+
+        <button type="submit" id="tombolBuatAkun">
+            Buat Akun
+        </button>
+
+    </form>
+
+    <p id="pesanBuatAkun"></p>
+
+    <button onclick="tutup()">Kembali</button>
+</section>
 
     <section id="profil" class="detail">
         <h2>👤 Profil Pengguna</h2>
