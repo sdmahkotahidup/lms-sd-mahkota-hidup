@@ -19,7 +19,7 @@ body{
 header{
     background:#123b68;
     color:white;
-    padding:25px;
+    padding:24px;
     text-align:center;
 }
 
@@ -29,21 +29,18 @@ main{
     padding:16px;
 }
 
-.menu{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:16px;
-}
-
 .card{
     background:white;
     border-radius:12px;
     padding:22px;
+    margin-bottom:16px;
     box-shadow:0 2px 8px #0001;
 }
 
-.card h2{
-    color:#123b68;
+.menu{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:16px;
 }
 
 button{
@@ -51,11 +48,22 @@ button{
     color:white;
     border:0;
     border-radius:7px;
-    padding:10px 15px;
+    padding:11px 16px;
     cursor:pointer;
+    margin-top:8px;
 }
 
-section.detail{
+button:hover{background:#1d4f85}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:8px 0 14px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+}
+
+.detail{
     display:none;
     background:white;
     padding:20px;
@@ -63,17 +71,22 @@ section.detail{
     margin-top:20px;
 }
 
-footer{
-    text-align:center;
-    padding:20px;
-    color:#64748b;
-}
-
-.item-materi{
+.item{
     background:#f1f5f9;
     padding:15px;
     margin-bottom:12px;
     border-radius:8px;
+}
+
+.hidden{display:none}
+
+.error{color:#b91c1c}
+.success{color:#166534}
+
+footer{
+    text-align:center;
+    padding:20px;
+    color:#64748b;
 }
 </style>
 </head>
@@ -87,93 +100,295 @@ footer{
 
 <main>
 
-<h2>Selamat Datang!</h2>
-<p>Silakan pilih menu pembelajaran di bawah ini.</p>
+<!-- HALAMAN LOGIN -->
+<section id="halamanLogin" class="card">
+    <h2>Login Pengguna</h2>
+    <p>Silakan masuk menggunakan akun LMS Anda.</p>
 
-<div class="menu">
+    <form id="formLogin">
+        <label>Email</label>
+        <input
+            type="email"
+            id="email"
+            placeholder="Masukkan email"
+            required
+        >
 
-    <div class="card">
-        <h2>📚 Materi</h2>
-        <p>Akses bahan pembelajaran.</p>
-        <button onclick="buka('materi')">Buka Materi</button>
-    </div>
+        <label>Kata Sandi</label>
+        <input
+            type="password"
+            id="password"
+            placeholder="Masukkan kata sandi"
+            required
+        >
 
-    <div class="card">
-        <h2>📝 Tugas</h2>
-        <p>Lihat informasi tugas sekolah.</p>
-        <button onclick="buka('tugas')">Buka Tugas</button>
-    </div>
+        <button type="submit" id="tombolLogin">
+            Masuk
+        </button>
+    </form>
 
-    <div class="card">
-        <h2>❓ Kuis</h2>
-        <p>Latihan dan evaluasi belajar.</p>
-        <button onclick="buka('kuis')">Buka Kuis</button>
-    </div>
-
-    <div class="card">
-        <h2>📊 Nilai</h2>
-        <p>Informasi hasil belajar.</p>
-        <button onclick="buka('nilai')">Buka Nilai</button>
-    </div>
-
-</div>
-
-<section id="materi" class="detail">
-    <h2>Materi Pembelajaran</h2>
-    <p>Daftar materi pembelajaran dari guru.</p>
-    <div id="daftarMateri">Klik Buka Materi untuk memuat data.</div>
-    <button onclick="tutup()">Kembali</button>
+    <p id="pesanLogin"></p>
 </section>
 
 
-<section id="tugas" class="detail">
-    <h2>Tugas Sekolah</h2>
-    <p>Daftar tugas yang diberikan oleh guru.</p>
+<!-- DASHBOARD -->
+<section id="dashboard" class="hidden">
 
-    <div id="daftarTugas">
-        Klik Buka Tugas untuk memuat data.
+    <div class="card">
+        <h2 id="judulDashboard">Dashboard</h2>
+        <p id="identitasPengguna"></p>
+        <button onclick="logout()">Keluar</button>
     </div>
 
-    <button onclick="tutup()">Kembali</button>
-</section>
+    <div class="card">
+        <h2>Menu Pembelajaran</h2>
+        <div class="menu" id="menuPengguna"></div>
+    </div>
 
+    <section id="materi" class="detail">
+        <h2>📚 Materi Pembelajaran</h2>
+        <div id="daftarMateri">Memuat materi...</div>
+        <button onclick="tutup()">Kembali</button>
+    </section>
 
-<section id="kuis" class="detail">
-    <h2>Kuis Pembelajaran</h2>
-    <p>Kuis latihan akan tersedia setelah disiapkan oleh guru.</p>
-    <button onclick="tutup()">Kembali</button>
-</section>
+    <section id="tugas" class="detail">
+        <h2>📝 Tugas Sekolah</h2>
+        <div id="daftarTugas">Memuat tugas...</div>
+        <button onclick="tutup()">Kembali</button>
+    </section>
 
-<section id="nilai" class="detail">
-    <h2>Nilai Siswa</h2>
-    <p>Nilai akan ditampilkan setelah sistem penilaian dibuat.</p>
-    <button onclick="tutup()">Kembali</button>
+    <section id="kuis" class="detail">
+        <h2>❓ Kuis IPAS Kelas VI</h2>
+        <p>Mengenal Tata Surya</p>
+        <div id="daftarKuis">Memuat soal...</div>
+        <button onclick="tutup()">Kembali</button>
+    </section>
+
+    <section id="nilai" class="detail">
+        <h2>📊 Nilai Siswa</h2>
+        <p>Fitur nilai akan dihubungkan pada tahap berikutnya.</p>
+        <button onclick="tutup()">Kembali</button>
+    </section>
+
+    <section id="kelola" class="detail">
+        <h2>⚙️ Pengelolaan LMS</h2>
+        <p>
+            Area pengelolaan untuk administrator.
+            Fitur pengelolaan akun dan data akan dibuat pada tahap berikutnya.
+        </p>
+        <button onclick="tutup()">Kembali</button>
+    </section>
+
+    <section id="profil" class="detail">
+        <h2>👤 Profil Pengguna</h2>
+        <p id="detailProfil"></p>
+        <button onclick="tutup()">Kembali</button>
+    </section>
+
 </section>
 
 </main>
 
 <footer>© SD Mahkota Hidup</footer>
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
 // KONEKSI SUPABASE
-const SUPABASE_URL = "https://oygmtzaioiiluhyersmu.supabase.co";
+const SUPABASE_URL =
+"https://oygmtzaioiiluhyersmu.supabase.co";
 
-const SUPABASE_ANON_KEY = "sb_publishable_pP5_OdoCYalo3aJP_gBwWQ_luQO1Kko";
+const SUPABASE_ANON_KEY =
+"sb_publishable_pP5_OdoCYalo3aJP_gBwWQ_luQO1Kko";
 
 const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
 
+let penggunaAktif = null;
+
+
+// LOGIN
+document.getElementById('formLogin')
+.addEventListener('submit', async function(event){
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById('email').value.trim();
+
+    const password =
+        document.getElementById('password').value;
+
+    const pesan =
+        document.getElementById('pesanLogin');
+
+    const tombol =
+        document.getElementById('tombolLogin');
+
+    tombol.disabled = true;
+    tombol.textContent = 'Sedang masuk...';
+    pesan.textContent = '';
+
+    try{
+
+        const {data, error} =
+            await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+        if(error){
+            throw error;
+        }
+
+        await tampilkanDashboard(data.user);
+
+    }catch(error){
+
+        pesan.textContent =
+            'Login gagal: ' + error.message;
+
+        pesan.className = 'error';
+
+    }finally{
+
+        tombol.disabled = false;
+        tombol.textContent = 'Masuk';
+
+    }
+
+});
+
+
+// MEMERIKSA PROFIL DAN ROLE
+async function tampilkanDashboard(user){
+
+    const {data, error} = await supabaseClient
+        .from('profiles')
+        .select('id,nama,username,role')
+        .eq('id', user.id)
+        .maybeSingle();
+
+    if(error){
+        throw error;
+    }
+
+    if(!data){
+        await supabaseClient.auth.signOut();
+        throw new Error(
+            'Profil akun belum terdaftar. Hubungi administrator.'
+        );
+    }
+
+    if(!['admin','guru','siswa'].includes(data.role)){
+        await supabaseClient.auth.signOut();
+        throw new Error('Jenis akun tidak dikenali.');
+    }
+
+    penggunaAktif = data;
+
+    document.getElementById('halamanLogin')
+        .classList.add('hidden');
+
+    document.getElementById('dashboard')
+        .classList.remove('hidden');
+
+    document.getElementById('judulDashboard')
+        .textContent =
+            'Dashboard ' + data.role.toUpperCase();
+
+    document.getElementById('identitasPengguna')
+        .textContent =
+            'Selamat datang, ' + data.nama +
+            ' (' + data.role + ')';
+
+    document.getElementById('detailProfil')
+        .textContent =
+            'Nama: ' + data.nama +
+            ' | Username: ' + data.username +
+            ' | Role: ' + data.role;
+
+    buatMenu(data.role);
+
+}
+
+
+// MEMBUAT MENU BERDASARKAN ROLE
+function buatMenu(role){
+
+    const tempat =
+        document.getElementById('menuPengguna');
+
+    tempat.replaceChildren();
+
+    let daftar = [];
+
+    if(role === 'admin'){
+
+        daftar = [
+            ['📚 Materi','materi'],
+            ['📝 Tugas','tugas'],
+            ['❓ Kuis','kuis'],
+            ['📊 Nilai','nilai'],
+            ['⚙️ Kelola LMS','kelola'],
+            ['👤 Profil','profil']
+        ];
+
+    }else if(role === 'guru'){
+
+        daftar = [
+            ['📚 Materi','materi'],
+            ['📝 Tugas','tugas'],
+            ['❓ Kuis','kuis'],
+            ['📊 Nilai','nilai'],
+            ['👤 Profil','profil']
+        ];
+
+    }else if(role === 'siswa'){
+
+        daftar = [
+            ['📚 Materi','materi'],
+            ['📝 Tugas','tugas'],
+            ['❓ Kuis','kuis'],
+            ['📊 Nilai','nilai'],
+            ['👤 Profil','profil']
+        ];
+
+    }
+
+    daftar.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'card';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item[0];
+
+        const tombol = document.createElement('button');
+        tombol.textContent = 'Buka';
+
+        tombol.addEventListener('click',function(){
+            buka(item[1]);
+        });
+
+        kartu.appendChild(judul);
+        kartu.appendChild(tombol);
+
+        tempat.appendChild(kartu);
+
+    });
+
+}
+
+
 // MEMBUKA MENU
 function buka(id){
 
-    document.querySelectorAll('.detail').forEach(function(x){
-        x.style.display = 'none';
+    document.querySelectorAll('.detail').forEach(function(bagian){
+        bagian.style.display = 'none';
     });
 
     const bagian = document.getElementById(id);
@@ -182,198 +397,236 @@ function buka(id){
 
     bagian.style.display = 'block';
 
-  if(id === 'materi'){
-    muatMateri();
-}
-
-if(id === 'tugas'){
-    muatTugas();
-}
+    if(id === 'materi') muatMateri();
+    if(id === 'tugas') muatTugas();
+    if(id === 'kuis') muatKuis();
 
     bagian.scrollIntoView({behavior:'smooth'});
+
 }
+
 
 // MENUTUP MENU
 function tutup(){
 
-    document.querySelectorAll('.detail').forEach(function(x){
-        x.style.display = 'none';
+    document.querySelectorAll('.detail').forEach(function(bagian){
+        bagian.style.display = 'none';
     });
 
 }
 
-// MEMBACA DATA MATERI DARI SUPABASE
 
-
+// MEMUAT MATERI
 async function muatMateri(){
-    
-async function muatTugas(){
-
-    const tempat = document.getElementById('daftarTugas');
-
-    tempat.textContent = 'Sedang mengambil data tugas...';
-
-    try{
-
-        const {data, error} = await supabaseClient
-            .from('tugas')
-            .select('*')
-            .order('created_at', {ascending:false});
-
-        if(error){
-            tempat.textContent = 'Gagal mengambil tugas: ' + error.message;
-            console.error(error);
-            return;
-        }
-
-        tempat.replaceChildren();
-
-        if(!data || data.length === 0){
-            tempat.textContent = 'Belum ada tugas tersedia.';
-            return;
-        }
-
-        data.forEach(function(item){
-
-            const kartu = document.createElement('div');
-            kartu.className = 'item-materi';
-
-            const judul = document.createElement('h3');
-            judul.textContent = item.judul || 'Tugas tanpa judul';
-
-            const deskripsi = document.createElement('p');
-            deskripsi.textContent = item.deskripsi || 'Belum ada deskripsi tugas.';
-
-            kartu.appendChild(judul);
-            kartu.appendChild(deskripsi);
-
-            tempat.appendChild(kartu);
-
-        });
-
-    }catch(error){
-
-        tempat.textContent = 'Terjadi kesalahan: ' + error.message;
-        console.error(error);
-
-    }
-
-}
-
 
     const tempat = document.getElementById('daftarMateri');
+    tempat.textContent = 'Sedang mengambil materi...';
 
-    tempat.textContent = 'Sedang mengambil data materi...';
+    const {data,error} = await supabaseClient
+        .from('materi')
+        .select('*');
 
-    try{
-
-        const {data, error} = await supabaseClient
-            .from('materi')
-            .select('*');
-
-        if(error){
-            tempat.textContent =
-                'Gagal mengambil materi: ' + error.message;
-            console.error(error);
-            return;
-        }
-
-        tempat.replaceChildren();
-
-        if(!data || data.length === 0){
-            tempat.textContent =
-                'Belum ada materi yang tersedia.';
-            return;
-        }
-
-        data.forEach(function(item){
-
-            const kartu = document.createElement('div');
-            kartu.className = 'item-materi';
-
-            const judul = document.createElement('h3');
-            judul.textContent = item.judul || 'Materi tanpa judul';
-
-            const isi = document.createElement('p');
-            isi.className = 'isi-materi';
-            isi.textContent = item.isi || 'Isi materi belum tersedia.';
-
-            kartu.appendChild(judul);
-            kartu.appendChild(isi);
-
-            tempat.appendChild(kartu);
-
-        });
-
-    }catch(error){
-
-        tempat.textContent =
-            'Terjadi kesalahan: ' + error.message;
-
-        console.error(error);
-
+    if(error){
+        tempat.textContent = 'Gagal: ' + error.message;
+        return;
     }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada materi.';
+        return;
+    }
+
+    data.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item.judul || 'Materi';
+
+        const isi = document.createElement('p');
+        isi.textContent = item.isi || '';
+
+        kartu.append(judul,isi);
+        tempat.appendChild(kartu);
+
+    });
 
 }
 
 
-console.log("LMS SD Mahkota Hidup siap digunakan.");
-
+// MEMUAT TUGAS
 async function muatTugas(){
 
     const tempat = document.getElementById('daftarTugas');
+    tempat.textContent = 'Sedang mengambil tugas...';
 
-    tempat.textContent = 'Sedang mengambil data tugas...';
+    const {data,error} = await supabaseClient
+        .from('tugas')
+        .select('*')
+        .order('created_at',{ascending:false});
 
-    try{
+    if(error){
+        tempat.textContent = 'Gagal: ' + error.message;
+        return;
+    }
 
-        const {data, error} = await supabaseClient
-            .from('tugas')
-            .select('*')
-            .order('created_at', {ascending:false});
+    tempat.replaceChildren();
 
-        if(error){
-            tempat.textContent = 'Gagal mengambil tugas: ' + error.message;
-            console.error(error);
-            return;
-        }
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada tugas.';
+        return;
+    }
 
-        tempat.replaceChildren();
+    data.forEach(function(item){
 
-        if(!data || data.length === 0){
-            tempat.textContent = 'Belum ada tugas tersedia.';
-            return;
-        }
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
 
-        data.forEach(function(item){
+        const judul = document.createElement('h3');
+        judul.textContent = item.judul || 'Tugas';
 
-            const kartu = document.createElement('div');
-            kartu.className = 'item-materi';
+        const deskripsi = document.createElement('p');
+        deskripsi.textContent = item.deskripsi || '';
 
-            const judul = document.createElement('h3');
-            judul.textContent = item.judul || 'Tugas tanpa judul';
+        kartu.append(judul,deskripsi);
+        tempat.appendChild(kartu);
 
-            const deskripsi = document.createElement('p');
-            deskripsi.textContent = item.deskripsi || 'Belum ada deskripsi tugas.';
+    });
 
-            kartu.appendChild(judul);
-            kartu.appendChild(deskripsi);
+}
 
-            tempat.appendChild(kartu);
+
+// MEMUAT KUIS
+async function muatKuis(){
+
+    const tempat = document.getElementById('daftarKuis');
+    tempat.textContent = 'Sedang mengambil soal...';
+
+    const {data,error} = await supabaseClient
+        .from('soal_kuis_tampil')
+        .select('id,kuis_id,pertanyaan,pilihan_a,pilihan_b,pilihan_c,pilihan_d')
+        .eq('kuis_id',1)
+        .order('id',{ascending:true});
+
+    if(error){
+        tempat.textContent = 'Gagal: ' + error.message;
+        return;
+    }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada soal.';
+        return;
+    }
+
+    data.forEach(function(item,index){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
+
+        const pertanyaan = document.createElement('h3');
+        pertanyaan.textContent =
+            (index+1) + '. ' + item.pertanyaan;
+
+        kartu.appendChild(pertanyaan);
+
+        [
+            ['A',item.pilihan_a],
+            ['B',item.pilihan_b],
+            ['C',item.pilihan_c],
+            ['D',item.pilihan_d]
+        ].forEach(function(p){
+
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.style.padding = '7px';
+
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'soal_' + item.id;
+            radio.value = p[0];
+            radio.style.width = 'auto';
+            radio.style.margin = '0 8px 0 0';
+
+            label.append(
+                radio,
+                document.createTextNode(p[0] + '. ' + p[1])
+            );
+
+            kartu.appendChild(label);
 
         });
 
-    }catch(error){
+        tempat.appendChild(kartu);
 
-        tempat.textContent = 'Terjadi kesalahan: ' + error.message;
+    });
+
+    const catatan = document.createElement('p');
+    catatan.textContent =
+        'Jumlah soal: ' + data.length +
+        '. Fitur pengiriman dan penilaian akan dibuat berikutnya.';
+
+    tempat.appendChild(catatan);
+
+}
+
+
+// LOGOUT
+async function logout(){
+
+    const {error} = await supabaseClient.auth.signOut();
+
+    if(error){
+        alert('Gagal keluar: ' + error.message);
+        return;
+    }
+
+    penggunaAktif = null;
+
+    document.getElementById('dashboard')
+        .classList.add('hidden');
+
+    document.getElementById('halamanLogin')
+        .classList.remove('hidden');
+
+    document.getElementById('formLogin').reset();
+
+    document.getElementById('pesanLogin').textContent = '';
+
+}
+
+
+// MEMERIKSA SESI SAAT WEBSITE DIBUKA
+async function periksaSesi(){
+
+    const {data,error} =
+        await supabaseClient.auth.getSession();
+
+    if(error){
         console.error(error);
+        return;
+    }
 
+    if(data.session){
+        try{
+            await tampilkanDashboard(data.session.user);
+        }catch(error){
+            document.getElementById('pesanLogin').textContent =
+                error.message;
+        }
     }
 
 }
+
+periksaSesi();
+
+console.log('LMS SD Mahkota Hidup siap digunakan.');
 
 </script>
 
 </body>
 </html>
-
