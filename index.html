@@ -289,6 +289,17 @@ footer{
     </form>
 
     <p id="pesanBuatAkun"></p>
+      <hr>
+
+<h3>📋 Pendaftaran Siswa Baru</h3>
+
+<button type="button" onclick="muatPendaftar()">
+    Tampilkan Pendaftar
+</button>
+
+<div id="daftarPendaftar">
+    Belum ada data yang ditampilkan.
+</div>
 
     <button onclick="tutup()">Kembali</button>
 </section>
@@ -849,6 +860,80 @@ document.getElementById('formBuatAkun')
     }
 
 });
+    
+// MEMUAT DAFTAR SISWA YANG MENUNGGU PERSETUJUAN
+async function muatPendaftar() {
+    const tempat = document.getElementById('daftarPendaftar');
+
+    tempat.textContent = 'Memuat data pendaftar...';
+
+    try {
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                'kelola-pendaftaran-siswa',
+                { body: { aksi: 'daftar' } }
+            );
+
+        if (error) throw error;
+        if (data.error) throw new Error(data.error);
+
+        if (!data.data || data.data.length === 0) {
+            tempat.textContent = 'Belum ada siswa yang menunggu persetujuan.';
+            return;
+        }
+
+        tempat.innerHTML = '';
+
+        data.data.forEach(function(siswa) {
+            const kartu = document.createElement('div');
+            kartu.style.padding = '12px';
+            kartu.style.margin = '10px 0';
+            kartu.style.border = '1px solid #ccc';
+            kartu.style.borderRadius = '8px';
+
+            const nama = document.createElement('p');
+            nama.textContent = 'Nama: ' + siswa.nama;
+
+            const nisn = document.createElement('p');
+            nisn.textContent = 'NISN: ' + (siswa.nisn || '-');
+
+            const tombol = document.createElement('button');
+            tombol.textContent = 'Setujui Siswa';
+            tombol.addEventListener('click', function() {
+                setujuiPendaftar(siswa.id);
+            });
+
+            kartu.append(nama, nisn, tombol);
+            tempat.appendChild(kartu);
+        });
+
+    } catch (error) {
+        tempat.textContent = 'Gagal memuat pendaftar: ' + error.message;
+    }
+}
+
+// MENYETUJUI PENDAFTARAN SISWA
+async function setujuiPendaftar(id) {
+    if (!confirm('Apakah siswa ini akan disetujui?')) return;
+
+    try {
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                'kelola-pendaftaran-siswa',
+                { body: { aksi: 'setujui', id: id } }
+            );
+
+        if (error) throw error;
+        if (data.error) throw new Error(data.error);
+
+        alert('Siswa berhasil disetujui.');
+        muatPendaftar();
+
+    } catch (error) {
+        alert('Gagal menyetujui siswa: ' + error.message);
+    }
+}
+
 // LOGOUT
 async function logout(){
 
