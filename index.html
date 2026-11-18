@@ -6,6 +6,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LMS SD Mahkota Hidup</title>
 
+/* ===== KARTU MENU DASHBOARD ===== */
+
+#menuPengguna {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+#menuPengguna .card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 5px 18px rgba(15, 40, 70, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#menuPengguna .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(15, 40, 70, 0.13);
+}
+
+#menuPengguna h2,
+#menuPengguna h3 {
+    color: #123b68;
+}
+
+#menuPengguna button {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    background: #123b68;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#menuPengguna button:hover {
+    background: #2563a6;
+}
+
+/* ===== TAMPILAN HALAMAN DETAIL ===== */
+
+.detail {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    margin-top: 20px;
+    box-shadow: 0 5px 18px rgba(15, 40, 70, 0.08);
+}
+
+.detail h2 {
+    color: #123b68;
+}
+
+.detail button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    background: #123b68;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    #menuPengguna {
+        grid-template-columns: 1fr;
+    }
+
+    .detail {
+        padding: 18px;
+    }
+}
+
 <style>
 *{box-sizing:border-box}
 
