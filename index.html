@@ -421,14 +421,43 @@ footer{
 </section>
 <section id="dashboard" class="hidden">
 
-    <div class="card">
-        <h2 id="judulDashboard">Dashboard</h2>
-        <p id="identitasPengguna"></p>
-        <button onclick="logout()">Keluar</button>
+<!-- DASHBOARD -->
+<section id="dashboard" class="hidden">
+
+    <div class="mh-welcome">
+        <div>
+            <span class="mh-tag">DASHBOARD PEMBELAJARAN</span>
+
+            <h1 id="judulDashboard">Dashboard</h1>
+
+            <p id="identitasPengguna">
+                Selamat datang di LMS SD Mahkota Hidup.
+            </p>
+        </div>
+
+        <div class="mh-illustration">
+            🎓📚
+        </div>
     </div>
 
     <div class="card">
-        <h2>Menu Pembelajaran</h2>
+        <h2>🏫 Portal SD Mahkota Hidup</h2>
+
+        <p>
+            Selamat menggunakan fasilitas pembelajaran digital.
+            Pilih menu di bawah untuk melanjutkan aktivitas.
+        </p>
+
+        <button onclick="logout()">
+            Keluar dari Akun
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>📖 Menu Pembelajaran</h2>
+
+        <p>Silakan pilih layanan yang ingin dibuka.</p>
+
         <div class="menu" id="menuPengguna"></div>
     </div>
 
@@ -457,73 +486,58 @@ footer{
         <button onclick="tutup()">Kembali</button>
     </section>
 
-  <section id="kelola" class="detail">
-    <h2>⚙️ Pengelolaan LMS</h2>
-    <p>Tambah akun guru dan siswa.</p>
+    <section id="kelola" class="detail">
+        <h2>⚙️ Pengelolaan LMS</h2>
+        <p>Tambah akun guru dan siswa.</p>
 
-    <form id="formBuatAkun">
+        <form id="formBuatAkun">
 
-        <label>Nama Lengkap</label>
-        <input
-            type="text"
-            id="namaAkun"
-            placeholder="Masukkan nama lengkap"
-            required
-        >
+            <label>Nama Lengkap</label>
+            <input type="text" id="namaAkun"
+                placeholder="Masukkan nama lengkap" required>
 
-        <label>Username</label>
-        <input
-            type="text"
-            id="usernameAkun"
-            placeholder="Masukkan username"
-            required
-        >
+            <label>Username</label>
+            <input type="text" id="usernameAkun"
+                placeholder="Masukkan username" required>
 
-        <label>Email</label>
-        <input
-            type="email"
-            id="emailAkun"
-            placeholder="Masukkan email akun"
-            required
-        >
+            <label>Email</label>
+            <input type="email" id="emailAkun"
+                placeholder="Masukkan email akun" required>
 
-        <label>Kata Sandi</label>
-        <input
-            type="password"
-            id="passwordAkun"
-            placeholder="Minimal 8 karakter"
-            minlength="8"
-            required
-        >
+            <label>Kata Sandi</label>
+            <input type="password" id="passwordAkun"
+                placeholder="Minimal 8 karakter"
+                minlength="8" required>
 
-        <label>Jenis Akun</label>
-        <select id="roleAkun" required>
-            <option value="">Pilih jenis akun</option>
-            <option value="guru">Guru</option>
-            <option value="siswa">Siswa</option>
-        </select>
+            <label>Jenis Akun</label>
+            <select id="roleAkun" required>
+                <option value="">Pilih jenis akun</option>
+                <option value="guru">Guru</option>
+                <option value="siswa">Siswa</option>
+            </select>
 
-        <button type="submit" id="tombolBuatAkun">
-            Buat Akun
+            <button type="submit" id="tombolBuatAkun">
+                Buat Akun
+            </button>
+
+        </form>
+
+        <p id="pesanBuatAkun"></p>
+
+        <hr>
+
+        <h3>📋 Pendaftaran Siswa Baru</h3>
+
+        <button type="button" onclick="muatPendaftar()">
+            Tampilkan Pendaftar
         </button>
 
-    </form>
+        <div id="daftarPendaftar">
+            Belum ada data yang ditampilkan.
+        </div>
 
-    <p id="pesanBuatAkun"></p>
-      <hr>
-
-<h3>📋 Pendaftaran Siswa Baru</h3>
-
-<button type="button" onclick="muatPendaftar()">
-    Tampilkan Pendaftar
-</button>
-
-<div id="daftarPendaftar">
-    Belum ada data yang ditampilkan.
-</div>
-
-    <button onclick="tutup()">Kembali</button>
-</section>
+        <button onclick="tutup()">Kembali</button>
+    </section>
 
     <section id="profil" class="detail">
         <h2>👤 Profil Pengguna</h2>
@@ -532,6 +546,7 @@ footer{
     </section>
 
 </section>
+
 
 </main>
 
