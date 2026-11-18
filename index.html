@@ -316,7 +316,7 @@ async function tampilkanDashboard(user){
 
     const {data, error} = await supabaseClient
         .from('profiles')
-        .select('id,nama,username,role')
+        .select('id,nama,username,role,status')
         .eq('id', user.id)
         .maybeSingle();
 
@@ -330,6 +330,12 @@ async function tampilkanDashboard(user){
             'Profil akun belum terdaftar. Hubungi administrator.'
         );
     }
+    if(data.status !== 'approved'){
+    await supabaseClient.auth.signOut();
+    throw new Error(
+        'Akun Anda masih menunggu persetujuan administrator.'
+    );
+}
 
     if(!['admin','guru','siswa'].includes(data.role)){
         await supabaseClient.auth.signOut();
