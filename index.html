@@ -925,6 +925,7 @@ function buka(id){
     if(id === 'materi') muatMateri();
     if(id === 'tugas') muatTugas();
     if(id === 'kuis') muatKuis();
+    if(id === 'pengumuman') muatPengumuman();
 
     bagian.scrollIntoView({behavior:'smooth'});
 
@@ -1099,6 +1100,106 @@ async function muatKuis(){
 
 }
 
+// MEMUAT PENGUMUMAN
+async function muatPengumuman(){
+
+    const tempat = document.getElementById('daftarPengumuman');
+    const form = document.getElementById('formPengumuman');
+
+    form.classList.toggle(
+        'hidden',
+        !penggunaAktif ||
+        !['admin','guru'].includes(penggunaAktif.role)
+    );
+
+    tempat.textContent = 'Memuat pengumuman...';
+
+    const {data,error} = await supabaseClient
+        .from('pengumuman')
+        .select('*')
+        .order('created_at',{ascending:false});
+
+    if(error){
+        tempat.textContent = 'Gagal memuat: ' + error.message;
+        return;
+    }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada pengumuman.';
+        return;
+    }
+
+    data.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item.judul;
+
+        const isi = document.createElement('p');
+        isi.textContent = item.isi;
+
+        const tanggal = document.createElement('small');
+        tanggal.textContent =
+            new Date(item.created_at).toLocaleDateString('id-ID');
+
+        kartu.append(judul,isi,tanggal);
+        tempat.appendChild(kartu);
+
+    });
+
+}
+
+
+// MENYIMPAN PENGUMUMAN
+async function simpanPengumuman(){
+
+    if(!penggunaAktif ||
+       !['admin','guru'].includes(penggunaAktif.role)){
+        alert('Hanya Admin dan Guru yang dapat membuat pengumuman.');
+        return;
+    }
+
+    const judul =
+        document.getElementById('judulPengumuman').value.trim();
+
+    const isi =
+        document.getElementById('isiPengumuman').value.trim();
+
+    const pesan =
+        document.getElementById('pesanPengumuman');
+
+    if(!judul || !isi){
+        pesan.textContent = 'Judul dan isi pengumuman wajib diisi.';
+        return;
+    }
+
+    const {error} = await supabaseClient
+        .from('pengumuman')
+        .insert({
+            judul: judul,
+            isi: isi,
+            dibuat_oleh: penggunaAktif.nama
+        });
+
+    if(error){
+        pesan.textContent = 'Gagal menyimpan: ' + error.message;
+        return;
+    }
+
+    pesan.textContent = 'Pengumuman berhasil disimpan!';
+
+    document.getElementById('judulPengumuman').value = '';
+    document.getElementById('isiPengumuman').value = '';
+
+    await muatPengumuman();
+
+}
+
+    
 // MEMBUAT AKUN GURU DAN SISWA
 document.getElementById('formBuatAkun')
 .addEventListener('submit', async function(event){
