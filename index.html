@@ -416,7 +416,11 @@ button {
     }
 }
 
-    
+  
+body:has(#dashboard:not(.hidden)) > header {
+    display: none;
+}
+  
 </style>
 </head>
 
@@ -432,18 +436,44 @@ button {
 <!-- HALAMAN LOGIN -->
 <section id="halamanLogin">
 
-    <div class="mh-welcome">
-        <div>
-            <span class="mh-tag">PORTAL PEMBELAJARAN DIGITAL</span>
+  
+<!-- HEADER NAVIGASI LMS -->
+<nav class="mh-nav">
 
-            <h1>Selamat Datang di<br>SD Mahkota Hidup</h1>
+    <h2>📘 SD MAHKOTA HIDUP</h2>
 
-            <p>
-                Belajar, Berkarya, dan Meraih Prestasi.
-                Mari tumbuh bersama melalui pembelajaran
-                digital yang menyenangkan.
-            </p>
-        </div>
+    <div class="mh-nav-links">
+
+        <button onclick="tutup()">🏠 Beranda</button>
+
+        <button onclick="buka('materi')">📚 Materi</button>
+
+        <button onclick="buka('tugas')">📝 Tugas</button>
+
+        <button onclick="buka('nilai')">📊 Nilai</button>
+
+        <button onclick="buka('jadwal')">📅 Jadwal</button>
+
+        <button onclick="buka('pengumuman')">📢 Pengumuman</button>
+
+    </div>
+
+    <div>
+        👤 <span id="namaRole">Pengguna</span>
+        <button onclick="logout()">Keluar</button>
+    </div>
+
+</nav>
+
+<!-- BANNER GEDUNG SEKOLAH -->
+<div class="mh-hero"></div>
+
+<p id="identitasPengguna">
+    Selamat datang di LMS SD Mahkota Hidup.
+</p>
+
+<h1 id="judulDashboard" hidden>Dashboard</h1>
+
 
         <div class="mh-illustration">
             🏫📚
