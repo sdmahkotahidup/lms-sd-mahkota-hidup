@@ -789,10 +789,8 @@ document.getElementById('formDaftar')
     }
 
 });
-// MEMBUAT MENU BERDASARKAN ROLE
-function buatMenu(role){
 
-  
+ // MEMBUAT MENU BERDASARKAN ROLE
 function buatMenu(role){
 
     const tempat = document.getElementById('menuPengguna');
@@ -867,32 +865,7 @@ function buatMenu(role){
 
 }
 
-    daftar.forEach(function(item){
-
-        const kartu = document.createElement('div');
-        kartu.className = 'card';
-
-        const judul = document.createElement('h3');
-        judul.textContent = item[0];
-
-        const tombol = document.createElement('button');
-        tombol.textContent = 'Buka';
-
-        tombol.addEventListener('click',function(){
-            buka(item[1]);
-        });
-
-        kartu.appendChild(judul);
-        kartu.appendChild(tombol);
-
-        tempat.appendChild(kartu);
-
-    });
-
-}
-
-
-// MEMBUKA MENU
+    // MEMBUKA MENU
 function buka(id){
 
     document.querySelectorAll('.detail').forEach(function(bagian){
