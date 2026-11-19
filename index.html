@@ -628,7 +628,30 @@ body:has(#dashboard:not(.hidden)) > header {
 <!-- DASHBOARD -->
     <section id="dashboard" class="hidden">
 
-    <div class="mh-welcome">
+<!-- HEADER NAVIGASI LMS -->
+<nav class="mh-nav">
+    <h2>📘 SD MAHKOTA HIDUP</h2>
+
+    <div class="mh-nav-links">
+        <button onclick="tutup()">🏠 Beranda</button>
+        <button onclick="buka('materi')">📚 Materi</button>
+        <button onclick="buka('tugas')">📝 Tugas</button>
+        <button onclick="buka('nilai')">📊 Nilai</button>
+        <button onclick="buka('jadwal')">📅 Jadwal</button>
+        <button onclick="buka('pengumuman')">📢 Pengumuman</button>
+    </div>
+
+    <div>
+        👤 <span id="namaRole">Pengguna</span>
+        <button onclick="logout()">Keluar</button>
+    </div>
+</nav>
+
+<div class="mh-hero"></div>
+
+<p id="identitasPengguna">Selamat datang di LMS SD Mahkota Hidup</p>
+<h1 id="judulDashboard" hidden>Dashboard</h1>
+        
         <div>
             <span class="mh-tag">DASHBOARD PEMBELAJARAN</span>
 
