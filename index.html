@@ -1134,7 +1134,20 @@ function buatMenu(role){
     daftar.forEach(function(item){
 
         const kartu = document.createElement('div');
-        kartu.className = 'card';
+kartu.className = 'card mh-menu-card';
+
+if(item[1] === 'materi'){
+    kartu.classList.add('mh-blue');
+}
+else if(item[1] === 'tugas'){
+    kartu.classList.add('mh-green');
+}
+else if(item[1] === 'nilai'){
+    kartu.classList.add('mh-orange');
+}
+else if(item[1] === 'jadwal'){
+    kartu.classList.add('mh-purple');
+}
 
         const judul = document.createElement('h3');
         judul.textContent = item[0];
