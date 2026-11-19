@@ -961,6 +961,7 @@ function buka(id){
     if(id === 'kuis') muatKuis();
     if(id === 'pengumuman') muatPengumuman();
 if(id === 'jadwal') muatJadwal();
+    if(id === 'uploadTugas') muatUploadTugas();
     bagian.scrollIntoView({behavior:'smooth'});
 
 }
@@ -1529,7 +1530,33 @@ async function periksaSesi(){
 periksaSesi();
 
 console.log('LMS SD Mahkota Hidup siap digunakan.');
+<!-- HALAMAN UPLOAD TUGAS -->
+<section id="uploadTugas" class="detail">
 
+    <h2>📤 Upload Tugas</h2>
+
+    <p>Silakan unggah tugas pembelajaran di sini.</p>
+
+    <label>Pilih File Tugas</label>
+    <input
+        type="file"
+        id="fileTugas"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+    >
+
+    <br><br>
+
+    <button onclick="tutup()">Kembali</button>
+
+</section>
+    // MEMUAT HALAMAN UPLOAD TUGAS
+function muatUploadTugas(){
+
+    const tempat = document.getElementById('uploadTugas');
+
+    tempat.style.display = 'block';
+
+}
 </script>
 
 </body>
