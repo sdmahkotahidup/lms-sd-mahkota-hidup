@@ -280,7 +280,54 @@ footer{
         padding: 22px;
     }
 }
+/* ===== TAMPILAN BARU LMS MAHKOTA HIDUP ===== */
 
+body {
+    background:
+        radial-gradient(circle at top left, #dbeafe, transparent 40%),
+        linear-gradient(135deg, #eef5ff, #f8fafc);
+    color: #1e293b;
+}
+
+header {
+    background: linear-gradient(135deg, #123b68, #2563a6);
+    border-radius: 0 0 22px 22px;
+    padding: 28px 15px;
+    box-shadow: 0 5px 18px rgba(18, 59, 104, 0.2);
+}
+
+main {
+    max-width: 1100px;
+}
+
+#menuPengguna .card,
+.menu .card {
+    border-radius: 16px;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, 0.09);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#menuPengguna .card:hover,
+.menu .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 9px 22px rgba(15, 23, 42, 0.14);
+}
+
+button {
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.detail {
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.08);
+}
+
+.mh-welcome {
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(18, 59, 104, 0.15);
+}
 </style>
 </head>
 
@@ -659,20 +706,22 @@ footer{
 <button onclick="uploadTugasSekarang()">
     📤 Upload Tugas
 </button>
-<p id="statusUploadTugas"></p>
 
-<hr>
+<p id="statusUploadTugas"></p>
+    <hr>
 
 <h3>📋 Daftar File Tugas</h3>
-
 <div id="daftarFileTugas">
     Memuat file tugas...
 </div>
-<br><br>
+    <br><br>
 
-<button onclick="tutup()">Kembali</button>
+    <button onclick="tutup()">Kembali</button>
 
 </section>
+</section>
+
+    
 <p id="statusUploadTugas"></p>
     <hr>
 
