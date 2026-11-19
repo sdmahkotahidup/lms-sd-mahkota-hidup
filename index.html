@@ -457,50 +457,8 @@ body:has(#dashboard:not(.hidden)) > header {
 <section id="halamanLogin">
 
   
-<!-- HEADER NAVIGASI LMS -->
-<nav class="mh-nav">
 
-    <h2>📘 SD MAHKOTA HIDUP</h2>
-
-    <div class="mh-nav-links">
-
-        <button onclick="tutup()">🏠 Beranda</button>
-
-        <button onclick="buka('materi')">📚 Materi</button>
-
-        <button onclick="buka('tugas')">📝 Tugas</button>
-
-        <button onclick="buka('nilai')">📊 Nilai</button>
-
-        <button onclick="buka('jadwal')">📅 Jadwal</button>
-
-        <button onclick="buka('pengumuman')">📢 Pengumuman</button>
-
-    </div>
-
-    <div>
-        👤 <span id="namaRole">Pengguna</span>
-        <button onclick="logout()">Keluar</button>
-    </div>
-
-</nav>
-
-<!-- BANNER GEDUNG SEKOLAH -->
-<div class="mh-hero"></div>
-
-<p id="identitasPengguna">
-    Selamat datang di LMS SD Mahkota Hidup.
-</p>
-
-<h1 id="judulDashboard" hidden>Dashboard</h1>
-
-
-        <div class="mh-illustration">
-            🏫📚
-        </div>
-    </div>
-
-    <div class="mh-login-card">
+        <div class="mh-login-card">
 
         <h2>🔐 Login Pengguna</h2>
 
@@ -652,22 +610,7 @@ body:has(#dashboard:not(.hidden)) > header {
 <p id="identitasPengguna">Selamat datang di LMS SD Mahkota Hidup</p>
 <h1 id="judulDashboard" hidden>Dashboard</h1>
         
-        <div>
-            <span class="mh-tag">DASHBOARD PEMBELAJARAN</span>
-
-            <h1 id="judulDashboard">Dashboard</h1>
-
-            <p id="identitasPengguna">
-                Selamat datang di LMS SD Mahkota Hidup.
-            </p>
-        </div>
-
-        <div class="mh-illustration">
-            🎓📚
-        </div>
-    </div>
-
-    <div class="card">
+         <div class="card">
         <h2>🏫 Portal SD Mahkota Hidup</h2>
 
         <p>
@@ -708,25 +651,7 @@ body:has(#dashboard:not(.hidden)) > header {
 
     </div>
 
-    <section id="materi" class="detail">
-        <h2>📚 Materi Pembelajaran</h2>
-        <div id="daftarMateri">Memuat materi...</div>
-        <button onclick="tutup()">Kembali</button>
-    </section>
-
-    <section id="tugas" class="detail">
-        <h2>📝 Tugas Sekolah</h2>
-        <div id="daftarTugas">Memuat tugas...</div>
-        <button onclick="tutup()">Kembali</button>
-    </section>
-
-    <section id="kuis" class="detail">
-        <h2>❓ Kuis IPAS Kelas VI</h2>
-        <p>Mengenal Tata Surya</p>
-        <div id="daftarKuis">Memuat soal...</div>
-        <button onclick="tutup()">Kembali</button>
-    </section>
-
+   
     <section id="nilai" class="detail">
         <h2>📊 Nilai Siswa</h2>
         <p>Fitur nilai akan dihubungkan pada tahap berikutnya.</p>
