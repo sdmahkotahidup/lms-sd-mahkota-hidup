@@ -1609,11 +1609,106 @@ async function uploadTugasSekarang(){
         return;
     }
 
-    status.textContent = 'Tugas berhasil diunggah!';
+   const {error:dbError} = await supabaseClient
+    .from('pengumpulan_tugas')
+    .insert({
+        user_id: penggunaAktif.id,
+        nama_siswa: penggunaAktif.nama,
+        nama_file: file.name,
+        lokasi_file: data.path
+    });
 
-    document.getElementById('fileTugas').value = '';
+if(dbError){
+    status.textContent = 'File terunggah, tetapi data tugas gagal disimpan: ' + dbError.message;
+    return;
+}
+
+status.textContent = 'Tugas berhasil diunggah dan dicatat!';
+
+document.getElementById('fileTugas').value = '';
+
+muatDaftarFileTugas();
+}
+
+// MEMUAT DAFTAR FILE TUGAS
+async function muatDaftarFileTugas(){
+
+    const tempat = document.getElementById('daftarFileTugas');
+
+    tempat.textContent = 'Memuat daftar tugas...';
+
+    let query = supabaseClient
+        .from('pengumpulan_tugas')
+        .select('*')
+        .order('created_at', {ascending:false});
+
+    if(penggunaAktif.role === 'siswa'){
+        query = query.eq('user_id', penggunaAktif.id);
+    }
+
+    const {data, error} = await query;
+
+    if(error){
+        tempat.textContent = 'Gagal memuat tugas: ' + error.message;
+        return;
+    }
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada tugas yang dikumpulkan.';
+        return;
+    }
+
+    tempat.innerHTML = '';
+
+    data.forEach(function(tugas){
+
+        const baris = document.createElement('div');
+
+        baris.style.border = '1px solid #ccc';
+        baris.style.padding = '12px';
+        baris.style.marginBottom = '10px';
+        baris.style.borderRadius = '8px';
+
+        const nama = document.createElement('p');
+        nama.textContent = '👤 Siswa: ' + tugas.nama_siswa;
+
+        const file = document.createElement('p');
+        file.textContent = '📄 File: ' + tugas.nama_file;
+
+        const tanggal = document.createElement('p');
+        tanggal.textContent = '📅 Upload: ' +
+            new Date(tugas.created_at).toLocaleString('id-ID');
+
+        const tombol = document.createElement('button');
+        tombol.textContent = '⬇️ Unduh';
+
+        tombol.onclick = async function(){
+
+            const {data:link, error:err} = await supabaseClient
+                .storage
+                .from('upload-tugas')
+                .createSignedUrl(tugas.lokasi_file, 60);
+
+            if(err){
+                alert('Gagal membuat link unduhan: ' + err.message);
+                return;
+            }
+
+            window.open(link.signedUrl, '_blank');
+
+        };
+
+        baris.appendChild(nama);
+        baris.appendChild(file);
+        baris.appendChild(tanggal);
+        baris.appendChild(tombol);
+
+        tempat.appendChild(baris);
+
+    });
 
 }
+    
 </script>    
 
 </body>
