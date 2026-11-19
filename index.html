@@ -504,7 +504,104 @@ footer{
         <button onclick="tutup()">Kembali</button>
     </section>
 
-        
+      <section id="jadwal" class="detail">
+
+    <h2>📅 Jadwal Pembelajaran</h2>
+
+    <div id="formJadwal" class="hidden">
+
+        <h3>Upload Jadwal Baru</h3>
+
+        <label>Pilih File Jadwal</label>
+        <input
+            type="file"
+            id="fileJadwal"
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+        >
+
+        <button onclick="uploadJadwal()">
+            // MEMUAT DAFTAR JADWAL
+async function muatJadwal(){
+
+    const tempat = document.getElementById('daftarJadwal');
+
+    const form = document.getElementById('formJadwal');
+
+    form.classList.toggle(
+        'hidden',
+        !penggunaAktif || penggunaAktif.role !== 'admin'
+    );
+
+    tempat.textContent = 'Memuat jadwal...';
+
+    const {data,error} = await supabaseClient
+        .from('jadwal_pembelajaran')
+        .select('*')
+        .order('created_at',{ascending:false});
+
+    if(error){
+        tempat.textContent = 'Gagal memuat: ' + error.message;
+        return;
+    }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada jadwal pembelajaran.';
+        return;
+    }
+
+    data.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item.nama_file;
+
+        const tombol = document.createElement('button');
+        tombol.textContent = 'Unduh Jadwal';
+
+        tombol.addEventListener('click',async function(){
+
+            const {data,error} = await supabaseClient
+                .storage
+                .from('jadwal-pembelajaran')
+                .createSignedUrl(item.lokasi_file,60);
+
+            if(error){
+                alert('Gagal membuka jadwal: ' + error.message);
+                return;
+            }
+
+            window.open(data.signedUrl,'_blank');
+
+        });
+
+        kartu.append(judul,tombol);
+        tempat.appendChild(kartu);
+
+    });
+
+}
+            Upload Jadwal
+        </button>
+
+        <p id="pesanJadwal"></p>
+
+    </div>
+
+    <hr>
+
+    <h3>Daftar Jadwal</h3>
+
+    <div id="daftarJadwal">
+        Memuat jadwal...
+    </div>
+
+    <button onclick="tutup()">Kembali</button>
+
+</section>  
 <section id="pengumuman" class="detail">
 
     <h2>📢 Pengumuman Sekolah</h2>
@@ -926,7 +1023,7 @@ function buka(id){
     if(id === 'tugas') muatTugas();
     if(id === 'kuis') muatKuis();
     if(id === 'pengumuman') muatPengumuman();
-
+if(id === 'jadwal') muatJadwal();
     bagian.scrollIntoView({behavior:'smooth'});
 
 }
@@ -1198,7 +1295,52 @@ async function simpanPengumuman(){
     await muatPengumuman();
 
 }
+// UPLOAD JADWAL PEMBELAJARAN
+async function uploadJadwal(){
 
+    if(!penggunaAktif || penggunaAktif.role !== 'admin'){
+        alert('Hanya Admin yang dapat mengunggah jadwal.');
+        return;
+    }
+
+    const file = document.getElementById('fileJadwal').files[0];
+    const pesan = document.getElementById('pesanJadwal');
+
+    if(!file){
+        pesan.textContent = 'Silakan pilih file jadwal.';
+        return;
+    }
+
+    const namaUnik = Date.now() + '_' + file.name;
+
+    const {data:uploadData,error:uploadError} = await supabaseClient
+        .storage
+        .from('jadwal-pembelajaran')
+        .upload(namaUnik,file);
+
+    if(uploadError){
+        pesan.textContent = 'Gagal upload: ' + uploadError.message;
+        return;
+    }
+
+    const {error:dbError} = await supabaseClient
+        .from('jadwal_pembelajaran')
+        .insert({
+            nama_file: file.name,
+            lokasi_file: uploadData.path,
+            diunggah_oleh: penggunaAktif.nama
+        });
+
+    if(dbError){
+        pesan.textContent = 'File terunggah, tetapi data jadwal gagal disimpan: ' + dbError.message;
+        return;
+    }
+
+    pesan.textContent = 'Jadwal berhasil diunggah!';
+    document.getElementById('fileJadwal').value = '';
+
+    await muatJadwal();
+}
     
 // MEMBUAT AKUN GURU DAN SISWA
 document.getElementById('formBuatAkun')
