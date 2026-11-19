@@ -1145,13 +1145,17 @@ else if(item[1] === 'jadwal'){
 
 }
 
-    // MEMBUKA MENU
-function buka(id){
+  // KEMBALI KE BERANDA
+function tutup(){
 
     document.querySelectorAll('.detail').forEach(function(bagian){
         bagian.style.display = 'none';
     });
 
+    document.getElementById('dashboard')
+        .classList.remove('hidden');
+
+}
     const bagian = document.getElementById(id);
 
     if(!bagian) return;
