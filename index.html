@@ -1173,17 +1173,45 @@ if(id === 'jadwal') muatJadwal();
 }
 
 
-// MENUTUP MENU
+// MEMBUKA HALAMAN DETAIL
+function buka(id){
+
+    document.querySelectorAll('.detail').forEach(function(bagian){
+        bagian.style.display = 'none';
+    });
+
+    const bagian = document.getElementById(id);
+
+    if(!bagian){
+        alert('Halaman ' + id + ' belum tersedia.');
+        return;
+    }
+
+    bagian.style.display = 'block';
+
+    if(id === 'materi') muatMateri();
+    if(id === 'tugas') muatTugas();
+    if(id === 'kuis') muatKuis();
+    if(id === 'pengumuman') muatPengumuman();
+    if(id === 'jadwal') muatJadwal();
+    if(id === 'uploadTugas') muatUploadTugas();
+
+    bagian.scrollIntoView({behavior:'smooth'});
+}
+
+
+// KEMBALI KE BERANDA
 function tutup(){
 
     document.querySelectorAll('.detail').forEach(function(bagian){
         bagian.style.display = 'none';
     });
 
+    document.getElementById('dashboard')
+        .classList.remove('hidden');
+
+    window.scrollTo({top:0, behavior:'smooth'});
 }
-
-
-// MEMUAT MATERI
 async function muatMateri(){
 
     const tempat = document.getElementById('daftarMateri');
