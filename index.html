@@ -1563,7 +1563,49 @@ function muatUploadTugas(){
     const tempat = document.getElementById('uploadTugas');
 
     tempat.style.display = 'block';
+// MENGUNGGAH TUGAS
+async function uploadTugasSekarang(){
 
+    if(!penggunaAktif){
+        alert('Silakan login terlebih dahulu.');
+        return;
+    }
+
+    const file = document.getElementById('fileTugas').files[0];
+    const status = document.getElementById('statusUploadTugas');
+
+    if(!file){
+        status.textContent = 'Silakan pilih file tugas terlebih dahulu.';
+        return;
+    }
+
+    if(file.size > 10 * 1024 * 1024){
+        status.textContent = 'Ukuran file maksimal 10 MB.';
+        return;
+    }
+
+    const namaAman = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+
+    const lokasiFile =
+        penggunaAktif.id + '/' + Date.now() + '_' + namaAman;
+
+    status.textContent = 'Sedang mengunggah tugas...';
+
+    const {data, error} = await supabaseClient
+        .storage
+        .from('upload-tugas')
+        .upload(lokasiFile, file);
+
+    if(error){
+        status.textContent = 'Gagal mengunggah: ' + error.message;
+        return;
+    }
+
+    status.textContent = 'Tugas berhasil diunggah!';
+
+    document.getElementById('fileTugas').value = '';
+
+}
 }
 </script>
 
