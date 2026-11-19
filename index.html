@@ -1278,7 +1278,66 @@ async function uploadJadwal(){
 
     await muatJadwal();
 }
-    
+    // MEMUAT DAFTAR JADWAL
+async function muatJadwal(){
+
+    const tempat = document.getElementById('daftarJadwal');
+    const form = document.getElementById('formJadwal');
+
+    form.classList.toggle(
+        'hidden',
+        !penggunaAktif || penggunaAktif.role !== 'admin'
+    );
+
+    tempat.textContent = 'Memuat jadwal...';
+
+    const {data,error} = await supabaseClient
+        .from('jadwal_pembelajaran')
+        .select('*')
+        .order('created_at',{ascending:false});
+
+    if(error){
+        tempat.textContent = 'Gagal memuat: ' + error.message;
+        return;
+    }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada jadwal pembelajaran.';
+        return;
+    }
+
+    data.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item.nama_file;
+
+        const tombol = document.createElement('button');
+        tombol.textContent = 'Unduh Jadwal';
+
+        tombol.addEventListener('click',async function(){
+
+            const {data,error} = await supabaseClient
+                .storage
+                .from('jadwal-pembelajaran')
+                .createSignedUrl(item.lokasi_file,60);
+
+            if(error){
+                alert('Gagal membuka jadwal: ' + error.message);
+                return;
+            }
+
+            window.open(data.signedUrl,'_blank');
+        });
+
+        kartu.append(judul,tombol);
+        tempat.appendChild(kartu);
+    });
+}
 // MEMBUAT AKUN GURU DAN SISWA
 document.getElementById('formBuatAkun')
 .addEventListener('submit', async function(event){
