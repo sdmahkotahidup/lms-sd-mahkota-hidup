@@ -504,6 +504,50 @@ footer{
         <button onclick="tutup()">Kembali</button>
     </section>
 
+        
+<section id="pengumuman" class="detail">
+
+    <h2>📢 Pengumuman Sekolah</h2>
+
+    <div id="formPengumuman" class="hidden">
+
+        <h3>✍️ Buat Pengumuman Baru</h3>
+
+        <label>Judul Pengumuman</label>
+        <input
+            type="text"
+            id="judulPengumuman"
+            placeholder="Masukkan judul pengumuman"
+        >
+
+        <label>Isi Pengumuman</label>
+        <textarea
+            id="isiPengumuman"
+            placeholder="Tuliskan isi pengumuman"
+            rows="5"
+            style="width:100%; padding:12px;"
+        ></textarea>
+
+        <button onclick="simpanPengumuman()">
+            Simpan Pengumuman
+        </button>
+
+        <p id="pesanPengumuman"></p>
+
+    </div>
+
+    <hr>
+
+    <h3>📋 Daftar Pengumuman</h3>
+
+    <div id="daftarPengumuman">
+        Memuat pengumuman...
+    </div>
+
+    <button onclick="tutup()">Kembali</button>
+
+</section>
+
     <section id="kelola" class="detail">
         <h2>⚙️ Pengelolaan LMS</h2>
         <p>Tambah akun guru dan siswa.</p>
