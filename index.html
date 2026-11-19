@@ -420,7 +420,28 @@ button {
 body:has(#dashboard:not(.hidden)) > header {
     display: none;
 }
-  
+ 
+.mh-info-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.mh-info-panel {
+    min-width: 0;
+}
+
+.mh-info-panel h2 {
+    color: #123b68;
+}
+
+@media(max-width:700px) {
+    .mh-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+ 
 </style>
 </head>
 
@@ -643,6 +664,26 @@ body:has(#dashboard:not(.hidden)) > header {
         <p>Silakan pilih layanan yang ingin dibuka.</p>
 
         <div class="menu" id="menuPengguna"></div>
+        
+<!-- INFORMASI DASHBOARD -->
+<div class="mh-info-grid">
+
+    <div class="mh-info-panel">
+        <h2>📢 Pengumuman Terbaru</h2>
+        <div id="pengumumanDashboard">
+            Memuat pengumuman...
+        </div>
+    </div>
+
+    <div class="mh-info-panel">
+        <h2>🏫 Informasi Sekolah</h2>
+        <h3>SD Mahkota Hidup</h3>
+        <p>Belajar, Berkarya, dan Berprestasi.</p>
+        <p>Selamat datang di portal pembelajaran digital sekolah.</p>
+    </div>
+
+</div>
+
     </div>
 
     <section id="materi" class="detail">
@@ -985,9 +1026,13 @@ async function tampilkanDashboard(user){
             'Nama: ' + data.nama +
             ' | Username: ' + data.username +
             ' | Role: ' + data.role;
-
+document.getElementById('namaRole').textContent =
+    data.nama + ' (' + data.role + ')';
     buatMenu(data.role);
 
+    muatPengumumanDashboard();
+
+}
 }
 
 // MEMBUKA FORM PENDAFTARAN SISWA
@@ -1415,6 +1460,49 @@ async function muatPengumuman(){
 
 
 // MENYIMPAN PENGUMUMAN
+    
+// MEMUAT PENGUMUMAN TERBARU DI DASHBOARD
+async function muatPengumumanDashboard(){
+
+    const tempat = document.getElementById('pengumumanDashboard');
+
+    tempat.textContent = 'Memuat pengumuman...';
+
+    const {data,error} = await supabaseClient
+        .from('pengumuman')
+        .select('judul,isi,created_at')
+        .order('created_at',{ascending:false})
+        .limit(2);
+
+    if(error){
+        tempat.textContent = 'Gagal memuat pengumuman.';
+        return;
+    }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada pengumuman.';
+        return;
+    }
+
+    data.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item.judul;
+
+        const isi = document.createElement('p');
+        isi.textContent = item.isi;
+
+        kartu.append(judul,isi);
+        tempat.appendChild(kartu);
+
+    });
+}
+
 async function simpanPengumuman(){
 
     if(!penggunaAktif ||
