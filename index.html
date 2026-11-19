@@ -792,8 +792,10 @@ document.getElementById('formDaftar')
 // MEMBUAT MENU BERDASARKAN ROLE
 function buatMenu(role){
 
-    const tempat =
-        document.getElementById('menuPengguna');
+  
+function buatMenu(role){
+
+    const tempat = document.getElementById('menuPengguna');
 
     tempat.replaceChildren();
 
@@ -806,6 +808,9 @@ function buatMenu(role){
             ['📝 Tugas','tugas'],
             ['❓ Kuis','kuis'],
             ['📊 Nilai','nilai'],
+            ['📅 Jadwal Pembelajaran','jadwal'],
+            ['📢 Pengumuman','pengumuman'],
+            ['📤 Upload Tugas','uploadTugas'],
             ['⚙️ Kelola LMS','kelola'],
             ['👤 Profil','profil']
         ];
@@ -817,6 +822,9 @@ function buatMenu(role){
             ['📝 Tugas','tugas'],
             ['❓ Kuis','kuis'],
             ['📊 Nilai','nilai'],
+            ['📅 Jadwal Pembelajaran','jadwal'],
+            ['📢 Pengumuman','pengumuman'],
+            ['📤 Upload Tugas','uploadTugas'],
             ['👤 Profil','profil']
         ];
 
@@ -827,10 +835,37 @@ function buatMenu(role){
             ['📝 Tugas','tugas'],
             ['❓ Kuis','kuis'],
             ['📊 Nilai','nilai'],
+            ['📅 Jadwal Pembelajaran','jadwal'],
+            ['📢 Pengumuman','pengumuman'],
+            ['📤 Upload Tugas','uploadTugas'],
             ['👤 Profil','profil']
         ];
 
     }
+
+    daftar.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'card';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item[0];
+
+        const tombol = document.createElement('button');
+        tombol.textContent = 'Buka';
+
+        tombol.addEventListener('click',function(){
+            buka(item[1]);
+        });
+
+        kartu.appendChild(judul);
+        kartu.appendChild(tombol);
+
+        tempat.appendChild(kartu);
+
+    });
+
+}
 
     daftar.forEach(function(item){
 
