@@ -1252,7 +1252,7 @@ async function uploadJadwal(){
 
     const {data:uploadData,error:uploadError} = await supabaseClient
         .storage
-        .from('jadwal-pembelajaran')
+       .from('jadwal pembelajaran')
         .upload(namaUnik,file);
 
     if(uploadError){
@@ -1323,7 +1323,7 @@ async function muatJadwal(){
 
             const {data,error} = await supabaseClient
                 .storage
-                .from('jadwal-pembelajaran')
+            .from('jadwal pembelajaran')
                 .createSignedUrl(item.lokasi_file,60);
 
             if(error){
