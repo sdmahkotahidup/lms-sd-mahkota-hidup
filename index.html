@@ -1644,9 +1644,14 @@ async function muatDaftarFileTugas(){
         .select('*')
         .order('created_at', {ascending:false});
 
-    if(penggunaAktif.role === 'siswa'){
-        query = query.eq('user_id', penggunaAktif.id);
-    }
+  if(!penggunaAktif){
+    tempat.textContent = 'Silakan login terlebih dahulu.';
+    return;
+}
+
+if(penggunaAktif.role === 'siswa'){
+    query = query.eq('user_id', penggunaAktif.id);
+}
 
     const {data, error} = await query;
 
