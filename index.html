@@ -641,6 +641,7 @@ body:has(#dashboard:not(.hidden)) > header {
                 required
             >
 
+            
             <label>Kata Sandi</label>
 
             <input
@@ -659,13 +660,14 @@ body:has(#dashboard:not(.hidden)) > header {
 
         <p id="pesanDaftar"></p>
 
-        <button
-            type="button"
-            class="mh-register-link"
-            onclick="kembaliLogin()">
-            ← Kembali ke Login
-            
-    </div>
+<button
+    type="button"
+    class="mh-register-link"
+    onclick="kembaliLogin()">
+    ← Kembali ke Login
+</button>
+
+</div>
 
 </section>
 
@@ -979,8 +981,6 @@ body:has(#dashboard:not(.hidden)) > header {
     <br><br>
 
     <button onclick="tutup()">Kembali</button>
-
-</section>
 </section>
 
 
@@ -1271,8 +1271,6 @@ function buatMenu(role){
 
 }
 
-
-function buka(id){
 function buka(id){
 
     const bagian = document.getElementById(id);
