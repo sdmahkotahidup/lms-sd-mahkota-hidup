@@ -1210,7 +1210,8 @@ document.getElementById('formDaftar')
 
 });
 
- // MEMBUAT MENU BERDASARKAN ROLE
+
+// MEMBUAT MENU TAMBAHAN BERDASARKAN ROLE
 function buatMenu(role){
 
     const tempat = document.getElementById('menuPengguna');
@@ -1222,12 +1223,6 @@ function buatMenu(role){
     if(role === 'admin'){
 
         daftar = [
-            ['📚 Materi','materi'],
-            ['📝 Tugas','tugas'],
-            ['❓ Kuis','kuis'],
-            ['📊 Nilai','nilai'],
-            ['📅 Jadwal Pembelajaran','jadwal'],
-            ['📢 Pengumuman','pengumuman'],
             ['📤 Upload Tugas','uploadTugas'],
             ['⚙️ Kelola LMS','kelola'],
             ['👤 Profil','profil']
@@ -1236,12 +1231,6 @@ function buatMenu(role){
     }else if(role === 'guru'){
 
         daftar = [
-            ['📚 Materi','materi'],
-            ['📝 Tugas','tugas'],
-            ['❓ Kuis','kuis'],
-            ['📊 Nilai','nilai'],
-            ['📅 Jadwal Pembelajaran','jadwal'],
-            ['📢 Pengumuman','pengumuman'],
             ['📤 Upload Tugas','uploadTugas'],
             ['🤖 Asisten AI Mahkota','asistenAI'],
             ['👤 Profil','profil']
@@ -1250,12 +1239,6 @@ function buatMenu(role){
     }else if(role === 'siswa'){
 
         daftar = [
-            ['📚 Materi','materi'],
-            ['📝 Tugas','tugas'],
-            ['❓ Kuis','kuis'],
-            ['📊 Nilai','nilai'],
-            ['📅 Jadwal Pembelajaran','jadwal'],
-            ['📢 Pengumuman','pengumuman'],
             ['📤 Upload Tugas','uploadTugas'],
             ['🤖 Asisten AI Mahkota','asistenAI'],
             ['👤 Profil','profil']
@@ -1266,20 +1249,7 @@ function buatMenu(role){
     daftar.forEach(function(item){
 
         const kartu = document.createElement('div');
-kartu.className = 'card mh-menu-card';
-
-if(item[1] === 'materi'){
-    kartu.classList.add('mh-blue');
-}
-else if(item[1] === 'tugas'){
-    kartu.classList.add('mh-green');
-}
-else if(item[1] === 'nilai'){
-    kartu.classList.add('mh-orange');
-}
-else if(item[1] === 'jadwal'){
-    kartu.classList.add('mh-purple');
-}
+        kartu.className = 'card mh-menu-card';
 
         const judul = document.createElement('h3');
         judul.textContent = item[0];
@@ -1300,9 +1270,6 @@ else if(item[1] === 'jadwal'){
 
 }
 
-
-
-// MEMBUKA HALAMAN DETAIL
 function buka(id){
 
     document.querySelectorAll('.detail').forEach(function(bagian){
