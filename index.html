@@ -1288,8 +1288,9 @@ function buka(id){
 
     // Sembunyikan semua halaman menu
     document.querySelectorAll('.detail').forEach(function(bagian){
-        bagian.style.display = 'none';
-    });
+        bagian.style.display = 
+
+            
 
     // Tampilkan halaman yang dipilih
     bagian.style.display = 'block';
@@ -1325,6 +1326,20 @@ function tutup(){
     window.scrollTo({top:0, behavior:'smooth'});
 }
 
+// MEMUAT MATERI
+async function muatMateri(){
+
+    const tempat = document.getElementById('daftarMateri');
+    tempat.textContent = 'Sedang mengambil materi...';
+
+    const {data,error} = await supabaseClient
+        .from('materi')
+        .select('*');
+
+    if(error){
+        tempat.textContent = 'Gagal: ' + error.message;
+        return;
+    }
 
     tempat.replaceChildren();
 
@@ -1350,8 +1365,6 @@ function tutup(){
     });
 
 }
-
-
 // MEMUAT TUGAS
 async function muatTugas(){
 
@@ -1560,41 +1573,7 @@ async function muatPengumumanDashboard(){
 
         const isi = document.createElement('p');
         isi.textContent = item.isi;
-
-      // MEMUAT MATERI
-async function muatMateri(){
-
-    const tempat = document.getElementById('daftarMateri');
-    tempat.textContent = 'Sedang mengambil materi...';
-
-    const {data,error} = await supabaseClient
-        .from('materi')
-        .select('*');
-
-    if(error){
-        tempat.textContent = 'Gagal: ' + error.message;
-        return;
-    }
-
-    tempat.replaceChildren();
-
-    if(!data || data.length === 0){
-        tempat.textContent = 'Belum ada materi.';
-        return;
-    }
-
-    data.forEach(function(item){
-
-        const kartu = document.createElement('div');
-        kartu.className = 'item';
-
-        const judul = document.createElement('h3');
-        judul.textContent = item.judul || 'Materi';
-
-        const isi = document.createElement('p');
-        isi.textContent = item.isi || '';
-
-        kartu.append(judul,isi);
+                kartu.append(judul,isi);
         tempat.appendChild(kartu);
 
     });
