@@ -1306,25 +1306,7 @@ function buka(id){
 }
 
 
-    const bagian = document.getElementById(id);
-
-    if(!bagian){
-        alert('Halaman ' + id + ' belum tersedia.');
-        return;
-    }
-
-    bagian.style.display = 'block';
-
-    if(id === 'materi') muatMateri();
-    if(id === 'tugas') muatTugas();
-    if(id === 'kuis') muatKuis();
-    if(id === 'pengumuman') muatPengumuman();
-    if(id === 'jadwal') muatJadwal();
-    if(id === 'uploadTugas') muatUploadTugas();
-
-    bagian.scrollIntoView({behavior:'smooth'});
-}
-
+   
 
 // KEMBALI KE BERANDA
 
@@ -1578,10 +1560,44 @@ async function muatPengumumanDashboard(){
         const isi = document.createElement('p');
         isi.textContent = item.isi;
 
+      // MEMUAT MATERI
+async function muatMateri(){
+
+    const tempat = document.getElementById('daftarMateri');
+    tempat.textContent = 'Sedang mengambil materi...';
+
+    const {data,error} = await supabaseClient
+        .from('materi')
+        .select('*');
+
+    if(error){
+        tempat.textContent = 'Gagal: ' + error.message;
+        return;
+    }
+
+    tempat.replaceChildren();
+
+    if(!data || data.length === 0){
+        tempat.textContent = 'Belum ada materi.';
+        return;
+    }
+
+    data.forEach(function(item){
+
+        const kartu = document.createElement('div');
+        kartu.className = 'item';
+
+        const judul = document.createElement('h3');
+        judul.textContent = item.judul || 'Materi';
+
+        const isi = document.createElement('p');
+        isi.textContent = item.isi || '';
+
         kartu.append(judul,isi);
         tempat.appendChild(kartu);
 
     });
+
 }
 
 async function simpanPengumuman(){
@@ -1681,6 +1697,8 @@ async function muatJadwal(){
 
     form.classList.toggle(
         'hidden',
+ 
+        
         !penggunaAktif || penggunaAktif.role !== 'admin'
     );
 
