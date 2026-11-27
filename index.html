@@ -1271,11 +1271,40 @@ function buatMenu(role){
 
 }
 
+
 function buka(id){
 
+    const bagian = document.getElementById(id);
+
+    if(!bagian){
+        alert('Halaman ' + id + ' belum tersedia.');
+        return;
+    }
+
+    // Sembunyikan dashboard
+    document.getElementById('dashboard')
+        .classList.add('hidden');
+
+    // Sembunyikan semua halaman menu
     document.querySelectorAll('.detail').forEach(function(bagian){
         bagian.style.display = 'none';
     });
+
+    // Tampilkan halaman yang dipilih
+    bagian.style.display = 'block';
+
+    // Muat data sesuai menu
+    if(id === 'materi') muatMateri();
+    if(id === 'tugas') muatTugas();
+    if(id === 'kuis') muatKuis();
+    if(id === 'pengumuman') muatPengumuman();
+    if(id === 'jadwal') muatJadwal();
+    if(id === 'uploadTugas') muatUploadTugas();
+
+    // Mulai dari bagian atas halaman
+    window.scrollTo({top:0, behavior:'smooth'});
+}
+
 
     const bagian = document.getElementById(id);
 
@@ -1298,30 +1327,21 @@ function buka(id){
 
 
 // KEMBALI KE BERANDA
+
 function tutup(){
 
+    // Sembunyikan semua halaman menu
     document.querySelectorAll('.detail').forEach(function(bagian){
         bagian.style.display = 'none';
     });
 
+    // Tampilkan kembali dashboard
     document.getElementById('dashboard')
         .classList.remove('hidden');
 
     window.scrollTo({top:0, behavior:'smooth'});
 }
-async function muatMateri(){
 
-    const tempat = document.getElementById('daftarMateri');
-    tempat.textContent = 'Sedang mengambil materi...';
-
-    const {data,error} = await supabaseClient
-        .from('materi')
-        .select('*');
-
-    if(error){
-        tempat.textContent = 'Gagal: ' + error.message;
-        return;
-    }
 
     tempat.replaceChildren();
 
