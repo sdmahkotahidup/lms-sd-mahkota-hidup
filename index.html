@@ -664,8 +664,7 @@ body:has(#dashboard:not(.hidden)) > header {
             class="mh-register-link"
             onclick="kembaliLogin()">
             ← Kembali ke Login
-        </button>
-
+            
     </div>
 
 </section>
@@ -1274,6 +1273,7 @@ function buatMenu(role){
 
 
 function buka(id){
+function buka(id){
 
     const bagian = document.getElementById(id);
 
@@ -1288,9 +1288,8 @@ function buka(id){
 
     // Sembunyikan semua halaman menu
     document.querySelectorAll('.detail').forEach(function(bagian){
-        bagian.style.display = 
-
-            
+        bagian.style.display = 'none';
+    });
 
     // Tampilkan halaman yang dipilih
     bagian.style.display = 'block';
@@ -1303,12 +1302,8 @@ function buka(id){
     if(id === 'jadwal') muatJadwal();
     if(id === 'uploadTugas') muatUploadTugas();
 
-    // Mulai dari bagian atas halaman
     window.scrollTo({top:0, behavior:'smooth'});
-}
-
-
-   
+}   
 
 // KEMBALI KE BERANDA
 
