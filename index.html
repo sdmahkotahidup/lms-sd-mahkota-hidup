@@ -484,9 +484,19 @@ body:has(#dashboard:not(.hidden)) > header {
 
 #dashboard #menuPengguna .card {
     border: 1px solid #dbe4f0;
+    border-radius: 18px;
     min-height: 160px;
+    padding: 22px;
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(18, 59, 104, 0.06);
+    transition: all 0.25s ease;
 }
 
+#dashboard #menuPengguna .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(18, 59, 104, 0.13);
+    border-color: #7da9dc;
+}
 #dashboard .mh-info-panel {
     border: 1px solid #e2e8f0;
 }
