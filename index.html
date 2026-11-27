@@ -345,12 +345,20 @@ button {
 .mh-nav h2 {
     margin: 0;
     color: white;
-}
-
 .mh-nav-links {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 2px;
+}
+
+.mh-nav-links button {
+    flex: 0 0 auto;
 }
 
 .mh-nav-links button {
