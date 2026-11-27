@@ -825,6 +825,56 @@ body:has(#dashboard:not(.hidden)) > header {
 
 </section>
 
+
+        <!-- HALAMAN ASISTEN AI MAHKOTA -->
+<section id="asistenAI" class="detail">
+
+    <h2>🤖 Asisten AI Mahkota</h2>
+    <p>Tanya apa saja tentang pelajaran, ya!</p>
+
+    <div style="background:#eff6ff;padding:18px;border-radius:15px;margin:15px 0;">
+        <h3>👋 Halo, teman belajar!</h3>
+        <p>Saya Asisten AI Mahkota. Saya siap membantu kamu belajar.</p>
+    </div>
+
+    <h3>💡 Contoh Pertanyaan</h3>
+
+    <button onclick="pilihPertanyaan('Mengapa langit berwarna biru?')">
+        Mengapa langit berwarna biru?
+    </button>
+
+    <button onclick="pilihPertanyaan('Apa itu pecahan?')">
+        Apa itu pecahan?
+    </button>
+
+    <button onclick="pilihPertanyaan('Buatkan latihan soal Matematika kelas IV')">
+        Latihan Matematika kelas IV
+    </button>
+
+    <hr>
+
+    <div id="percakapanAI"
+         style="background:#f8fafc;padding:15px;border-radius:12px;min-height:180px;">
+        <p>🤖 Halo! Ada yang ingin kamu pelajari hari ini?</p>
+    </div>
+
+    <textarea id="pertanyaanAI"
+        placeholder="Ketik pertanyaanmu di sini..."
+        rows="3"
+        style="width:100%;padding:12px;margin-top:12px;border:1px solid #cbd5e1;border-radius:10px;">
+    </textarea>
+
+    <button type="button" onclick="kirimPertanyaanAI()">
+        Kirim Pertanyaan
+    </button>
+
+    <p style="font-size:12px;color:#64748b;">
+        Asisten AI membantu belajar. Tetap bertanya kepada guru jika membutuhkan penjelasan lebih lanjut.
+    </p>
+
+    <button onclick="tutup()">Kembali</button>
+
+</section>
     <section id="kelola" class="detail">
         <h2>⚙️ Pengelolaan LMS</h2>
         <p>Tambah akun guru dan siswa.</p>
@@ -1178,6 +1228,7 @@ function buatMenu(role){
             ['📅 Jadwal Pembelajaran','jadwal'],
             ['📢 Pengumuman','pengumuman'],
             ['📤 Upload Tugas','uploadTugas'],
+            ['🤖 Asisten AI Mahkota','asistenAI'],
             ['👤 Profil','profil']
         ];
 
@@ -2022,7 +2073,34 @@ if(penggunaAktif.role === 'siswa'){
     });
 
 }
-    
+
+    // FUNGSI ASISTEN AI MAHKOTA
+
+function pilihPertanyaan(teks) {
+    document.getElementById('pertanyaanAI').value = teks;
+}
+
+function kirimPertanyaanAI() {
+    const kolom = document.getElementById('pertanyaanAI');
+    const percakapan = document.getElementById('percakapanAI');
+    const pertanyaan = kolom.value.trim();
+
+    if (pertanyaan === '') {
+        alert('Silakan tulis pertanyaan terlebih dahulu.');
+        return;
+    }
+
+    const pesan = document.createElement('p');
+    pesan.textContent = '👤 Kamu: ' + pertanyaan;
+    percakapan.appendChild(pesan);
+
+    const jawaban = document.createElement('p');
+    jawaban.textContent =
+        '🤖 Asisten AI Mahkota sedang disiapkan. Fitur jawaban AI akan kita hubungkan pada tahap berikutnya.';
+    percakapan.appendChild(jawaban);
+
+    kolom.value = '';
+}
 </script>    
 
 </body>
